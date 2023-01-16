@@ -1,5 +1,5 @@
 const axios = require('axios');
-const { Dog, Temperament } = require('../db.js');
+const { Dogs, Temperaments } = require('../db.js');
 
 const getDogsApi = async () => {
     try {
@@ -8,9 +8,11 @@ const getDogsApi = async () => {
             return {
                 id: dog.id,
                 name: dog.name,
+                image: image.url,
                 height: dog.height.metric,
                 weight: dog.weight.metric,
-                life_span: dog.life_span
+                life_span: dog.life_span,
+                temperament: dog.temperament
             };
         });
         return allDogs;
@@ -18,6 +20,25 @@ const getDogsApi = async () => {
         throw new Error('No se puede obtener la información de los perros');
     };
 };
+
+const getAllDogs = async () => {
+    try {
+        const allDogsApi = await getDogsApi();
+        const dogsDb = await Dogs.findAll();
+        const allDogsDb = dogsDb?.map(dog => {
+            return {
+                id: dog.id,
+                name: dog.name,
+                height: dog.height,
+                weight: dog.weight,
+                life_span: dog.life_span,
+            };
+        })
+        return [...allDogsApi, ...allDogsDb];
+    } catch (error) {
+        throw new Error(error);
+    }
+}
 
 const getDogByName = async (name) => {
     try {
@@ -37,41 +58,51 @@ const getDogByName = async (name) => {
         const dogsApi = await getDogsApi();
         const dogFindName = dogsApi.find(dog => dog.name === name);
         if (!dogFindName) {
-            throw new Error(`No se puede obtener la información del perro ${name}`)
-        }
+            throw new Error(`No se puede obtener la información del perro ${name}`);
+        };
         return dogFindName;
     } catch (error) {
-        throw new Error(error)
+        throw new Error(error);
     };
-}
+};
 
 const getDogByID = async (id) => {
     try {
         const dogsApi = await getDogsApi();
         const dogFindId = dogsApi.find(dog => dog.id === parseInt(id));
         if (!dogFindId) {
-            throw new Error(`No se puede obtener la información del perro de ${id}`)
+            throw new Error(`No se puede obtener la información del perro de ${id}`);
         }
         return dogFindId;
-    } catch (error ){
+    } catch (error) {
+        throw new Error(error);
+    };
+};
+
+const getTemperaments = async () => {
+    try {
+        const dogsApi = await getDogsApi();
+        let arrayTemperament = [];
+        dogsApi.map(dog => {
+            if (dog.temperament) {
+                arrayTemperament.push(...dog.temperament.split(/\s*,\s*/))
+            };
+        });
+        arrayTemperament.map(temperamentName => {
+            Temperaments.findOrCreate({
+                where: {
+                    name: temperamentName
+                },
+            });
+        });
+    } catch (error) {
         throw new Error(error);
     }
 }
 
-const getTemperament = async () => {
-    try {
-        
-    } catch (error) {
-        
-    }
-}
-
-
-
-
-
 module.exports = {
-    getDogsApi,
     getDogByName,
-    getDogByID
+    getDogByID,
+    getTemperaments,
+    getAllDogs
 }

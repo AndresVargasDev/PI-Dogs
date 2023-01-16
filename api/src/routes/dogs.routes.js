@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { getDogsApi, getDogByName, getDogByID } = require('../controllers/controller.js');
+const { getAllDogs, getDogByName, getDogByID } = require('../controllers/controller.js');
 
 const router = Router();
 
@@ -10,7 +10,7 @@ router.get('/', async (req, res) => {
             const dogName = await getDogByName(name);
             res.status(200).send(dogName);
         } else if (!name) {
-            const allDogs = await getDogsApi();
+            const allDogs = await getAllDogs();
             res.status(200).send(allDogs);
         };
     }
