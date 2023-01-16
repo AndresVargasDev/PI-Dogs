@@ -8,7 +8,7 @@ const getDogsApi = async () => {
             return {
                 id: dog.id,
                 name: dog.name,
-                image: image.url,
+                reference_image_id: dog.reference_image_id,
                 height: dog.height.metric,
                 weight: dog.weight.metric,
                 life_span: dog.life_span,
@@ -18,20 +18,21 @@ const getDogsApi = async () => {
         return allDogs;
     } catch {
         throw new Error('No se puede obtener la información de los perros');
-    };
-};
+    }
+}
 
 const getAllDogs = async () => {
     try {
         const allDogsApi = await getDogsApi();
-        const dogsDb = await Dogs.findAll();
-        const allDogsDb = dogsDb?.map(dog => {
+        const result = await Dogs.findAll();
+        const allDogsDb = result?.map(dog => {
             return {
                 id: dog.id,
                 name: dog.name,
+                image: dog.image,
                 height: dog.height,
                 weight: dog.weight,
-                life_span: dog.life_span,
+                life_span: dog.life_span
             };
         })
         return [...allDogsApi, ...allDogsDb];
@@ -40,31 +41,19 @@ const getAllDogs = async () => {
     }
 }
 
-const getDogByName = async (name) => {
+const getAllDogsByName = async (name) => {
     try {
-        // const api = await axios.get(`https://api.thedogapi.com/v1/breeds/search?q=${name}`);
-        // if (api.data.length !== 1) {
-        //     throw new Error(`No se puede obtener la información del perro ${name}`)
-        // } else {
-        //     const dog = {
-        //         id: api.data[0].id,
-        //         name: api.data[0].name,
-        //         height: api.data[0].height.metric,
-        //         weight: api.data[0].weight.metric,
-        //         life_span: api.data[0].life_span
-        //     };
-        //     return dog;
-        // }
-        const dogsApi = await getDogsApi();
-        const dogFindName = dogsApi.find(dog => dog.name === name);
-        if (!dogFindName) {
-            throw new Error(`No se puede obtener la información del perro ${name}`);
-        };
-        return dogFindName;
+        const allDogs = await getAllDogs();
+        const filterName = allDogs.filter(dog => dog.name.toLowerCase().includes(name.toLowerCase()))
+        if (filterName.length > 0) {
+            return filterName
+        } else {
+            throw new Error(`No se encontró el perro ${name}`)
+        }
     } catch (error) {
         throw new Error(error);
-    };
-};
+    }
+}
 
 const getDogByID = async (id) => {
     try {
@@ -100,9 +89,26 @@ const getTemperaments = async () => {
     }
 }
 
+
+const postDog = async (name, image, height, weight, life_span) => {
+    try {
+        const newDog = await Dogs.create({
+            name,
+            image,
+            height,
+            weight,
+            life_span
+        })
+        return newDog;
+    } catch (error) {
+        throw new Error(error);
+    }
+}
+
 module.exports = {
-    getDogByName,
+    getAllDogsByName,
     getDogByID,
     getTemperaments,
-    getAllDogs
+    getAllDogs,
+    postDog
 }
