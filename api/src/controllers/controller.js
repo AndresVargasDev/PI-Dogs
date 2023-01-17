@@ -9,8 +9,10 @@ const getDogsApi = async () => {
                 id: dog.id,
                 name: dog.name,
                 reference_image_id: dog.reference_image_id,
-                height: dog.height.metric,
-                weight: dog.weight.metric,
+                minHeight: parseInt(dog.height.metric.slice(0, 2).trim()),
+                maxHeight: parseInt(dog.height.metric.slice(4).trim()),
+                minWeight: parseInt(dog.weight.metric.slice(0, 2).trim()),
+                maxWeight: parseInt(dog.weight.metric.slice(4).trim()),
                 life_span: dog.life_span,
                 temperament: dog.temperament
             };
@@ -30,8 +32,10 @@ const getAllDogs = async () => {
                 id: dog.id,
                 name: dog.name,
                 image: dog.image,
-                height: dog.height,
-                weight: dog.weight,
+                minHeight: dog.minHeight,
+                maxHeight: dog.maxHeight,
+                minWeight: dog.minWeight,
+                maxWeight: dog.maxWeight,
                 life_span: dog.life_span
             };
         })
@@ -57,15 +61,16 @@ const getAllDogsByName = async (name) => {
 
 const getDogByID = async (id) => {
     try {
-        const dogsApi = await getDogsApi();
-        const dogFindId = dogsApi.find(dog => dog.id === parseInt(id));
-        if (!dogFindId) {
-            throw new Error(`No se puede obtener la información del perro de ${id}`);
+        const allDogs = await getAllDogs();
+        const filterName = allDogs.filter(dog => dog.id == id)
+        if (filterName.length > 0) {
+            return filterName
+        } else {
+            throw new Error(`No se encontró el perro ${id}`)
         }
-        return dogFindId;
     } catch (error) {
         throw new Error(error);
-    };
+    }
 };
 
 const getTemperaments = async () => {
@@ -89,17 +94,48 @@ const getTemperaments = async () => {
     }
 }
 
-
-const postDog = async (name, image, height, weight, life_span) => {
+const postDog = async (name, image, minHeight, maxHeight, minWeight, maxWeight, life_span) => {
     try {
         const newDog = await Dogs.create({
             name,
             image,
-            height,
-            weight,
+            minHeight,
+            maxHeight,
+            minWeight,
+            maxWeight,
             life_span
         })
         return newDog;
+    } catch (error) {
+        throw new Error(error);
+    }
+}
+
+const deleteDog = async (id) => {
+    try {
+        await Dogs.destroy({
+            where: {
+                id,
+            }
+        })
+        return id;
+    } catch (error) {
+        throw new Error(error);
+    }
+}
+
+const putDog = async (id, name, image, minHeight, maxHeight, minWeight, maxWeight, life_span) => {
+    try {
+        const updateDog = await Dogs.findByPk(id);
+        updateDog.name = name;
+        updateDog.image = image;
+        updateDog.minHeight = minHeight;
+        updateDog.maxHeight = maxHeight;
+        updateDog.minWeight = minWeight;
+        updateDog.maxWeight = maxWeight;
+        updateDog.life_span = life_span;
+        await updateDog.save();
+        return updateDog;
     } catch (error) {
         throw new Error(error);
     }
@@ -110,5 +146,7 @@ module.exports = {
     getDogByID,
     getTemperaments,
     getAllDogs,
-    postDog
+    postDog,
+    deleteDog,
+    putDog
 }
