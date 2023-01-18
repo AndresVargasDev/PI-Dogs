@@ -1,11 +1,12 @@
 const { Router } = require('express');
-const { getAllDogs, getAllDogsByName, getDogByID, postDog, deleteDog, putDog } = require('../controllers/controller.js');
+const { getAllDogs, getTemperaments, getAllDogsByName, getDogByID, postDog, deleteDog, putDog } = require('../controllers/controller.js');
 
 const router = Router();
 
 router.get('/', async (req, res) => {
     const { name } = req.query;
     try {
+        getTemperaments();
         if (name) {
             const dogsName = await getAllDogsByName(name);
             res.status(200).send(dogsName);
@@ -32,8 +33,9 @@ router.get('/:id', async (req, res) => {
 
 router.post('/', async (req, res) => {
     try {
-        const { name, image, minHeight, maxHeight, minWeight, maxWeight, life_span } = req.body;
+        const { name, image, minHeight, maxHeight, minWeight, maxWeight, life_span, temperaments } = req.body;
         const newDog = await postDog(name, image, minHeight, maxHeight, minWeight, maxWeight, life_span);
+        await newDog.addTemperaments(temperaments);
         res.status(200).send(newDog);
     } catch (error) {
         res.status(400).json({ error: error.message });
@@ -53,9 +55,9 @@ router.delete('/:id', async (req, res) => {
 router.put('/:id', async (req, res) => {
     try {
         const { id } = req.params;
-        const { name, image, minHeight, maxHeight, minWeight, maxWeight, life_span } = req.body;
-        const updatedog = putDog(id, name, image, minHeight, maxHeight, minWeight, maxWeight, life_span);
-        res.status(200).json({ message: `Se actualizó el perro ${name}`},);
+        const { name, image, minHeight, maxHeight, minWeight, maxWeight, life_span, temperament } = req.body;
+        const updatedog = putDog(id, name, image, minHeight, maxHeight, minWeight, maxWeight, life_span, temperament);
+        res.status(200).json({ message: `Se actualizó el perro ${updatedog}`},);
     } catch (error) {
         res.status(400).json({ error: error.message });
     }

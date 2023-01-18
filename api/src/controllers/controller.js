@@ -9,10 +9,10 @@ const getDogsApi = async () => {
                 id: dog.id,
                 name: dog.name,
                 reference_image_id: dog.reference_image_id,
-                minHeight: parseInt(dog.height.metric.slice(0, 2).trim()),
-                maxHeight: parseInt(dog.height.metric.slice(4).trim()),
-                minWeight: parseInt(dog.weight.metric.slice(0, 2).trim()),
-                maxWeight: parseInt(dog.weight.metric.slice(4).trim()),
+                minHeight: parseInt(dog.height.metric.split("-")[0]),
+                maxHeight: parseInt(dog.height.metric.split("-")[1]),
+                minWeight: parseInt(dog.weight.metric.split("-")[0]),
+                maxWeight: parseInt(dog.weight.metric.split("-")[1]),
                 life_span: dog.life_span,
                 temperament: dog.temperament
             };
@@ -26,24 +26,20 @@ const getDogsApi = async () => {
 const getAllDogs = async () => {
     try {
         const allDogsApi = await getDogsApi();
-        const result = await Dogs.findAll();
-        const allDogsDb = result?.map(dog => {
-            return {
-                id: dog.id,
-                name: dog.name,
-                image: dog.image,
-                minHeight: dog.minHeight,
-                maxHeight: dog.maxHeight,
-                minWeight: dog.minWeight,
-                maxWeight: dog.maxWeight,
-                life_span: dog.life_span
-            };
-        })
+        const allDogsDb = await Dogs.findAll({
+            include: {
+                model: Temperaments,
+                attributes: ["name"],
+                through: {
+                    attributes:[]
+                }
+            }
+        });
         return [...allDogsApi, ...allDogsDb];
     } catch (error) {
         throw new Error(error);
-    }
-}
+    };
+};
 
 const getAllDogsByName = async (name) => {
     try {
@@ -64,9 +60,9 @@ const getDogByID = async (id) => {
         const allDogs = await getAllDogs();
         const filterName = allDogs.filter(dog => dog.id == id)
         if (filterName.length > 0) {
-            return filterName
+            return filterName[0];
         } else {
-            throw new Error(`No se encontró el perro ${id}`)
+            throw new Error(`No se encontró el perro de ID ${id}`)
         }
     } catch (error) {
         throw new Error(error);
@@ -94,8 +90,13 @@ const getTemperaments = async () => {
     }
 }
 
-const postDog = async (name, image, minHeight, maxHeight, minWeight, maxWeight, life_span) => {
+const postDog = async (name, image, minHeight, maxHeight, minWeight, maxWeight, life_span, temperament) => {
     try {
+        const dogsApi = await getDogsApi();
+        const dogName = dogsApi.find(dog => dog.name === name);
+        if (dogName) {
+            throw new Error(`El perro ${name} ya existe en la API`);
+        }
         const newDog = await Dogs.create({
             name,
             image,
@@ -124,7 +125,7 @@ const deleteDog = async (id) => {
     }
 }
 
-const putDog = async (id, name, image, minHeight, maxHeight, minWeight, maxWeight, life_span) => {
+const putDog = async (id, name, image, minHeight, maxHeight, minWeight, maxWeight, life_span, temperament) => {
     try {
         const updateDog = await Dogs.findByPk(id);
         updateDog.name = name;
@@ -134,6 +135,7 @@ const putDog = async (id, name, image, minHeight, maxHeight, minWeight, maxWeigh
         updateDog.minWeight = minWeight;
         updateDog.maxWeight = maxWeight;
         updateDog.life_span = life_span;
+        updateDog.temperament = temperament
         await updateDog.save();
         return updateDog;
     } catch (error) {
