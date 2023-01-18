@@ -55,8 +55,8 @@ router.delete('/:id', async (req, res) => {
 router.put('/:id', async (req, res) => {
     try {
         const { id } = req.params;
-        const { name, image, minHeight, maxHeight, minWeight, maxWeight, life_span, temperament } = req.body;
-        const updatedog = putDog(id, name, image, minHeight, maxHeight, minWeight, maxWeight, life_span, temperament);
+        const { name, image, minHeight, maxHeight, minWeight, maxWeight, life_span } = req.body;
+        const updatedog = putDog(id, name, image, minHeight, maxHeight, minWeight, maxWeight, life_span);
         res.status(200).json({ message: `Se actualizó el perro ${updatedog}`},);
     } catch (error) {
         res.status(400).json({ error: error.message });

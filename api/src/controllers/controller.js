@@ -31,7 +31,7 @@ const getAllDogs = async () => {
                 model: Temperaments,
                 attributes: ["name"],
                 through: {
-                    attributes:[]
+                    attributes: []
                 }
             }
         });
@@ -90,12 +90,12 @@ const getTemperaments = async () => {
     }
 }
 
-const postDog = async (name, image, minHeight, maxHeight, minWeight, maxWeight, life_span, temperament) => {
+const postDog = async (name, image, minHeight, maxHeight, minWeight, maxWeight, life_span) => {
     try {
-        const dogsApi = await getDogsApi();
-        const dogName = dogsApi.find(dog => dog.name === name);
+        const dogsApiDB = await getAllDogs();
+        const dogName = dogsApiDB.find(dog => dog.name === name);
         if (dogName) {
-            throw new Error(`El perro ${name} ya existe en la API`);
+            throw new Error(`El perro ${name} ya existe en la API o en la Base de Datos`);
         }
         const newDog = await Dogs.create({
             name,
@@ -105,7 +105,7 @@ const postDog = async (name, image, minHeight, maxHeight, minWeight, maxWeight, 
             minWeight,
             maxWeight,
             life_span
-        })
+        });
         return newDog;
     } catch (error) {
         throw new Error(error);
@@ -125,7 +125,7 @@ const deleteDog = async (id) => {
     }
 }
 
-const putDog = async (id, name, image, minHeight, maxHeight, minWeight, maxWeight, life_span, temperament) => {
+const putDog = async (id, name, image, minHeight, maxHeight, minWeight, maxWeight, life_span) => {
     try {
         const updateDog = await Dogs.findByPk(id);
         updateDog.name = name;
@@ -134,8 +134,7 @@ const putDog = async (id, name, image, minHeight, maxHeight, minWeight, maxWeigh
         updateDog.maxHeight = maxHeight;
         updateDog.minWeight = minWeight;
         updateDog.maxWeight = maxWeight;
-        updateDog.life_span = life_span;
-        updateDog.temperament = temperament
+        updateDog.life_span = life_span
         await updateDog.save();
         return updateDog;
     } catch (error) {
