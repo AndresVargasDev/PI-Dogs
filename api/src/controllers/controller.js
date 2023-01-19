@@ -114,7 +114,7 @@ const postDog = async (name, reference_image_id, minHeight, maxHeight, minWeight
 
 const deleteDog = async (id) => {
     try {
-        await Dog.destroy({
+        const delDog = await Dog.destroy({
             where: {
                 id,
             }
