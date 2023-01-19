@@ -1,5 +1,5 @@
 const axios = require('axios');
-const { Dogs, Temperaments } = require('../db.js');
+const { Dog, Temperament } = require('../db.js');
 
 const getDogsApi = async () => {
     try {
@@ -14,7 +14,7 @@ const getDogsApi = async () => {
                 minWeight: parseInt(dog.weight.metric.split("-")[0]),
                 maxWeight: parseInt(dog.weight.metric.split("-")[1]),
                 life_span: dog.life_span,
-                temperament: dog.temperament
+                temperaments: dog.temperament
             };
         });
         return allDogs;
@@ -26,9 +26,9 @@ const getDogsApi = async () => {
 const getAllDogs = async () => {
     try {
         const allDogsApi = await getDogsApi();
-        const allDogsDb = await Dogs.findAll({
+        const allDogsDb = await Dog.findAll({
             include: {
-                model: Temperaments,
+                model: Temperament,
                 attributes: ["name"],
                 through: {
                     attributes: []
@@ -74,12 +74,12 @@ const getTemperaments = async () => {
         const dogsApi = await getDogsApi();
         let arrayTemperament = [];
         dogsApi.map(dog => {
-            if (dog.temperament) {
-                arrayTemperament.push(...dog.temperament.split(/\s*,\s*/))
+            if (dog.temperaments) {
+                arrayTemperament.push(...dog.temperaments.split(/\s*,\s*/))
             };
         });
         arrayTemperament.map(temperamentName => {
-            Temperaments.findOrCreate({
+            Temperament.findOrCreate({
                 where: {
                     name: temperamentName
                 },
@@ -90,16 +90,16 @@ const getTemperaments = async () => {
     }
 }
 
-const postDog = async (name, image, minHeight, maxHeight, minWeight, maxWeight, life_span) => {
+const postDog = async (name, reference_image_id, minHeight, maxHeight, minWeight, maxWeight, life_span) => {
     try {
         const dogsApiDB = await getAllDogs();
         const dogName = dogsApiDB.find(dog => dog.name === name);
         if (dogName) {
             throw new Error(`El perro ${name} ya existe en la API o en la Base de Datos`);
         }
-        const newDog = await Dogs.create({
+        const newDog = await Dog.create({
             name,
-            image,
+            reference_image_id,
             minHeight,
             maxHeight,
             minWeight,
@@ -114,7 +114,7 @@ const postDog = async (name, image, minHeight, maxHeight, minWeight, maxWeight, 
 
 const deleteDog = async (id) => {
     try {
-        await Dogs.destroy({
+        await Dog.destroy({
             where: {
                 id,
             }
@@ -125,11 +125,11 @@ const deleteDog = async (id) => {
     }
 }
 
-const putDog = async (id, name, image, minHeight, maxHeight, minWeight, maxWeight, life_span) => {
+const putDog = async (id, name, reference_image_id, minHeight, maxHeight, minWeight, maxWeight, life_span) => {
     try {
-        const updateDog = await Dogs.findByPk(id);
+        const updateDog = await Dog.findByPk(id);
         updateDog.name = name;
-        updateDog.image = image;
+        updateDog.reference_image_id = reference_image_id;
         updateDog.minHeight = minHeight;
         updateDog.maxHeight = maxHeight;
         updateDog.minWeight = minWeight;

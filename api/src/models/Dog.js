@@ -3,7 +3,7 @@ const { DataTypes } = require('sequelize');
 // Luego le injectamos la conexion a sequelize.
 module.exports = (sequelize) => {
   // defino el modelo
-  sequelize.define('dogs', {
+  sequelize.define('dog', {
     id: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
@@ -16,7 +16,7 @@ module.exports = (sequelize) => {
       allowNull: false,
       unique: true
     },
-    image: {
+    reference_image_id: {
       type: DataTypes.STRING,
     },
     minHeight: {
