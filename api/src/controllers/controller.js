@@ -35,7 +35,20 @@ const getAllDogs = async () => {
                 }
             }
         });
-        return [...allDogsApi, ...allDogsDb];
+        const allDogsDbWithTemps = allDogsDb.map(dog => {
+            return {
+                id: dog.id,
+                name: dog.name,
+                reference_image_id: dog.reference_image_id,
+                minHeight: dog.minHeight,
+                maxHeight: dog.maxHeight,
+                minWeight: dog.minWeight,
+                maxWeight: dog.maxWeight,
+                life_span: dog.life_span,
+                temperaments: dog.temperaments.map(e => { return e.name }).join(', ')               
+            }
+        })
+        return [...allDogsApi, ...allDogsDbWithTemps];
     } catch (error) {
         throw new Error(error);
     };
@@ -75,13 +88,13 @@ const getTemperaments = async () => {
         let arrayTemperament = [];
         dogsApi.map(dog => {
             if (dog.temperaments) {
-                arrayTemperament.push(...dog.temperaments.split(/\s*,\s*/))
+                arrayTemperament.push(...dog.temperaments.split(", "))
             };
         });
         arrayTemperament.map(temperamentName => {
             Temperament.findOrCreate({
                 where: {
-                    name: temperamentName
+                    name: temperamentName,
                 },
             });
         });
