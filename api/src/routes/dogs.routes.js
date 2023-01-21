@@ -33,8 +33,8 @@ router.get('/:id', async (req, res) => {
 
 router.post('/', async (req, res) => {
     try {
-        const { name, reference_image_id, minHeight, maxHeight, minWeight, maxWeight, life_span, temperaments } = req.body;
-        const newDog = await postDog(name, reference_image_id, minHeight, maxHeight, minWeight, maxWeight, life_span);
+        const { name, image, minHeight, maxHeight, minWeight, maxWeight, life_span, temperaments } = req.body;
+        const newDog = await postDog(name, image, minHeight, maxHeight, minWeight, maxWeight, life_span);
         await newDog.addTemperament(temperaments);
         res.status(200).json({ message: `Se creó el perro ${newDog.name}` });
     } catch (error) {
@@ -55,8 +55,8 @@ router.delete('/:id', async (req, res) => {
 router.put('/:id', async (req, res) => {
     try {
         const { id } = req.params;
-        const { name, reference_image_id, minHeight, maxHeight, minWeight, maxWeight, life_span } = req.body;
-        const updatedog = await putDog(id, name, reference_image_id, minHeight, maxHeight, minWeight, maxWeight, life_span);
+        const { name, image, minHeight, maxHeight, minWeight, maxWeight, life_span } = req.body;
+        const updatedog = await putDog(id, name, image, minHeight, maxHeight, minWeight, maxWeight, life_span);
         res.status(200).json({ message: `Se actualizó el perro ${updatedog.name}` },);
     } catch (error) {
         res.status(400).json({ error: error.message });

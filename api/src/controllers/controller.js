@@ -8,7 +8,7 @@ const getDogsApi = async () => {
             return {
                 id: dog.id,
                 name: dog.name,
-                reference_image_id: dog.reference_image_id,
+                image: dog.image.url,
                 minHeight: parseInt(dog.height.metric.split("-")[0]),
                 maxHeight: parseInt(dog.height.metric.split("-")[1]),
                 minWeight: parseInt(dog.weight.metric.split("-")[0]),
@@ -39,7 +39,7 @@ const getAllDogs = async () => {
             return {
                 id: dog.id,
                 name: dog.name,
-                reference_image_id: dog.reference_image_id,
+                image: dog.image,
                 minHeight: dog.minHeight,
                 maxHeight: dog.maxHeight,
                 minWeight: dog.minWeight,
@@ -103,7 +103,7 @@ const getTemperaments = async () => {
     }
 }
 
-const postDog = async (name, reference_image_id, minHeight, maxHeight, minWeight, maxWeight, life_span) => {
+const postDog = async (name, image, minHeight, maxHeight, minWeight, maxWeight, life_span) => {
     try {
         const dogsApiDB = await getAllDogs();
         const dogName = dogsApiDB.find(dog => dog.name === name);
@@ -112,7 +112,7 @@ const postDog = async (name, reference_image_id, minHeight, maxHeight, minWeight
         }
         const newDog = await Dog.create({
             name,
-            reference_image_id,
+            image,
             minHeight,
             maxHeight,
             minWeight,
@@ -138,11 +138,11 @@ const deleteDog = async (id) => {
     }
 }
 
-const putDog = async (id, name, reference_image_id, minHeight, maxHeight, minWeight, maxWeight, life_span) => {
+const putDog = async (id, name, image, minHeight, maxHeight, minWeight, maxWeight, life_span) => {
     try {
         const updateDog = await Dog.findByPk(id);
         updateDog.name = name;
-        updateDog.reference_image_id = reference_image_id;
+        updateDog.image = image;
         updateDog.minHeight = minHeight;
         updateDog.maxHeight = maxHeight;
         updateDog.minWeight = minWeight;

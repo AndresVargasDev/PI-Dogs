@@ -13,7 +13,7 @@ const CardsContainer = () => {
                     key={dog.id}
                     id={dog.id}
                     name={dog.name}
-                    reference_image_id={dog.reference_image_id}
+                    image={dog.image}
                     minHeight={dog.minHeight}
                     maxHeight={dog.maxHeight}
                     minWeight={dog.minWeight}

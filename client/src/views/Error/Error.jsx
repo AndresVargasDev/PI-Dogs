@@ -1,9 +1,10 @@
 import { Link } from 'react-router-dom';
 
-const LandingPage = () => {
+const Error = () => {
     return (
         <div>
-            <p>Landing Page</p>
+            <p>Error 404</p>
+            <p>Esta pagina no existe</p>
             <Link to="/home">
                 <button>Home</button>
             </Link>
@@ -11,4 +12,4 @@ const LandingPage = () => {
     )
 }
 
-export default LandingPage;
+export default Error;

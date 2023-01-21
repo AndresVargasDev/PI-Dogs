@@ -1,6 +1,39 @@
 .Card {
+    background-color: #62cdffa2;
+    display: flex;
     border: 1px solid black;
-    /* height: fit-content;
-    width: fit-content; */
     border-radius: 10px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 28%;
 }
+
+.img {
+    margin-top: 2rem;
+    width: 80%;
+    height: 80%;
+    border-radius: 8px;
+    border: 1px solid black;
+}
+
+.name {
+    font-size: 20px;
+}
+
+.weight {
+    font-size: 20px;
+    line-height: 0.5;
+    display: flex;
+	flex-direction: column;
+	flex-wrap: nowrap;
+	justify-content: center;
+	align-items: center;
+	align-content: center;
+}
+/*
+.temperaments {
+    font-size: 10px;
+    line-height: 2;
+    color: aliceblue;
+} */

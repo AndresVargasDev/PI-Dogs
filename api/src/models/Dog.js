@@ -16,23 +16,27 @@ module.exports = (sequelize) => {
       allowNull: false,
       unique: true
     },
-    reference_image_id: {
+    image: {
       type: DataTypes.STRING,
     },
     minHeight: {
       type: DataTypes.INTEGER,
+      validate: { min: 1, max: 100 },
       allowNull: false,
     },
     maxHeight: {
       type: DataTypes.INTEGER,
+      validate: { min: 1, max: 100 },
       allowNull: false,
     },
     minWeight: {
       type: DataTypes.INTEGER,
+      validate: { min: 1, max: 100 },
       allowNull: false,
     },
     maxWeight: {
       type: DataTypes.INTEGER,
+      validate: { min: 1, max: 100 },
       allowNull: false,
     },
     life_span: {

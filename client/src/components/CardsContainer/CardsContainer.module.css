@@ -5,4 +5,5 @@
     border-radius: 15px;
     flex-wrap: wrap;
     gap: 1em;
+    justify-content: space-around;
 }
