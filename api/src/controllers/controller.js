@@ -45,7 +45,7 @@ const getAllDogs = async () => {
                 minWeight: dog.minWeight,
                 maxWeight: dog.maxWeight,
                 life_span: dog.life_span,
-                temperaments: dog.temperaments.map(e => { return e.name }).join(', ')               
+                temperaments: dog.temperaments.map(temp => { return temp.name }).join(', ')
             }
         })
         return [...allDogsApi, ...allDogsDbWithTemps];
@@ -110,6 +110,18 @@ const postDog = async (name, image, minHeight, maxHeight, minWeight, maxWeight, 
         if (dogName) {
             throw new Error(`El perro ${name} ya existe en la API o en la Base de Datos`);
         }
+        else if (!name || !minHeight || !maxHeight || !minWeight || !maxWeight || !life_span) {
+            throw new Error("Debe llenar todos los campos obligatorios");
+        }
+        else if (minHeight <= 0 || maxHeight <= 0 || minWeight <= 0 || maxWeight <= 0) {
+            throw new Error("El valor de altura o peso no puede ser negativo");
+        }
+        else if (minHeight >= maxHeight) {
+            throw new Error("La altura minima es mayor o igual que la altura maxima, por favor validar datos");
+        }
+        else if (minWeight >= maxWeight) {
+            throw new Error("El peso minimo es mayor o igual que el peso maximo, por favor validar datos");
+        }
         const newDog = await Dog.create({
             name,
             image,
@@ -118,12 +130,15 @@ const postDog = async (name, image, minHeight, maxHeight, minWeight, maxWeight, 
             minWeight,
             maxWeight,
             life_span
+
+            
         });
         return newDog;
     } catch (error) {
         throw new Error(error);
     }
 }
+
 
 const deleteDog = async (id) => {
     try {

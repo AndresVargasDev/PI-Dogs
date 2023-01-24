@@ -8,9 +8,9 @@ const Form = () => {
 
     useEffect(() => {
         dispatch(getAllTemperaments());
-    },[dispatch]);
+    }, [dispatch]);
 
-    const allTemperaments = useSelector(state=>state.temperaments);
+    const allTemperaments = useSelector(state => state.temperaments);
 
     const [form, setForm] = useState({
         name: "",
@@ -41,17 +41,39 @@ const Form = () => {
         validate({ ...form, [property]: value })
     }
 
+    const submitHandler = (event) => {
+        console.log(form)
+        event.preventDefault();
+        axios.post("http://localhost:3001/dogs", form)
+            .then(res => alert(res))
+            .catch(error => alert(error));
+    }
+
+    function selectHandler(event) {
+        setForm({
+            ...form, temperaments: [...form.temperaments, event.target.value],
+        });
+    }
+
+    function deleteHandler(el) {
+        setForm({
+            ...form, temperaments: form.temperaments.filter((temp) => temp !== el),
+        });
+    }
+
+
     const validate = (form) => {
-        if (form.name === "") { setErrors({ ...errors, name: "Nombre vacio" }) }
-        else if (form.minHeight === "") { setErrors({ ...errors, minHeight: "Altura minima vacia" }) }
-        else if (form.maxHeight === "") { setErrors({ ...errors, maxHeight: "Altura maxima vacia" }) }
-        else if (form.minWeight === "") { setErrors({ ...errors, minWeight: "Peso minimo vacio" }) }
-        else if (form.maxWeight === "") { setErrors({ ...errors, maxWeight: "Peso maximo vacio" }) }
-        else if (form.life_span === "") { setErrors({ ...errors, life_span: "Años de vida estimados vacio" }) }
-        else if (form.temperaments === "") { setErrors({ ...errors, temperaments: "Temperamentos vacio" }) }
+        if (form.name.length < 3) { setErrors({ ...errors, name: "El nombre no puede se menor a 3 letras" }) }
+        // else if (form.minHeight <= 0) { setErrors({ ...errors, minHeight: "La altura minima no puede ser igual a 0 o negativa" }) }
+        // if (form.maxHeight <= 0) { setErrors({ ...errors, maxHeight: "La altura maxima no puede ser igual a 0 o negativa" }) }
+        // if (form.minWeight <= 0) { setErrors({ ...errors, minWeight: "El peso minimo vacio no puede ser igual a 0 negativo" }) }
+        // if (form.maxWeight <= 0) { setErrors({ ...errors, maxWeight: "El peso maximo vacio no puede ser igual a 0 negativo" }) }
+        // if (form.life_span === "") { setErrors({ ...errors, life_span: "El campo de años de vida estimados no puede vacio" }) }
+        // if (form.temperaments.length === 0) { setErrors({ ...errors, temperaments: "Debe asignar aunque sea un temperamento" }) }
         else {
             setErrors({
-                ...errors, name: "",
+                name: "",
+                image: "",
                 minHeight: "",
                 maxHeight: "",
                 minWeight: "",
@@ -61,14 +83,8 @@ const Form = () => {
             })
         }
     }
-    const submitHandler = (event) => {
-        event.preventDefault();
-        axios.post("http://localhost:3001/dogs", form)
-            .then(res => alert(res))
-            .catch(error => alert(error));
-    }
 
-
+    let temperamentsSorted = allTemperaments.sort((a, b) => a.name.localeCompare(b.name));
 
     return (
         <form onSubmit={submitHandler}>
@@ -107,17 +123,26 @@ const Form = () => {
                 {errors.life_span && <span>{errors.life_span}</span>}
             </div>
             <div>
-              <label for ="temperaments">Temperamentos</label>
-              <select name="temperaments">
-                <option disabled="">Selecciona uno o más temperamentos</option>
-                {allTemperaments.map((temp) => {
-                  return (
-                    <option key={temp.id} name={temp.name}>
-                      {temp.name}
-                    </option>
-                  );
-                })}
-              </select>
+                <label>Temperaments</label>
+                <select onChange={selectHandler}>
+                    <option disabled defaultValue> Selecciona uno o más temperamentos</option>
+                    {temperamentsSorted.map((temp) => {
+                        return (
+                            <option key={temp.id} name={temp.name} value={temp.id}>
+                                {temp.name}
+                            </option>
+                        );
+                    })}
+                </select>
+                <div>
+                    <h4>Temperamentos seleccionados: </h4>
+                    {form.temperaments.map((el) => (
+                        <div key={el}>
+                            <p>{el}</p>
+                            <button onClick={() => deleteHandler(el)}>x</button>
+                        </div>
+                    ))}
+                </div>
             </div>
             <button type="submit">Enviar</button>
         </form>

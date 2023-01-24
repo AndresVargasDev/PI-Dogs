@@ -22,9 +22,14 @@ export const getDogById = (id) => {
 }
 
 export const getAllTemperaments = () => async (dispatch) => {
-    const json = await axios.get('http://localhost:3001/temperaments')
-    const allTemperaments = json.data;
-    return dispatch({ type: GET_ALL_TEMPERAMENTS, payload: allTemperaments });
+    try {
+        const json = await axios.get('http://localhost:3001/temperaments')
+        const allTemperaments = json.data;
+        return dispatch({ type: GET_ALL_TEMPERAMENTS, payload: allTemperaments });
+    } catch (error) {
+        throw new Error (error);
+    }
+
 };
 
 

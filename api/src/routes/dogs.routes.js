@@ -33,10 +33,14 @@ router.get('/:id', async (req, res) => {
 
 router.post('/', async (req, res) => {
     try {
+        getTemperaments();
         const { name, image, minHeight, maxHeight, minWeight, maxWeight, life_span, temperaments } = req.body;
+        if(temperaments.length === 0){
+            throw new Error ("El perro debe tener al menos un temperamento");
+        }
         const newDog = await postDog(name, image, minHeight, maxHeight, minWeight, maxWeight, life_span);
         await newDog.addTemperament(temperaments);
-        res.status(200).json({ message: `Se creó el perro ${newDog.name}` });
+        res.status(200).json({ message: `Se creó el perro ${newDog.name} con el id ${newDog.id}` });
     } catch (error) {
         res.status(400).json({ error: error.message });
     }
