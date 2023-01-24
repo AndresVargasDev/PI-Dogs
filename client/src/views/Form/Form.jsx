@@ -128,7 +128,7 @@ const Form = () => {
                     <option disabled defaultValue> Selecciona uno o más temperamentos</option>
                     {temperamentsSorted.map((temp) => {
                         return (
-                            <option key={temp.id} name={temp.name} value={temp.name}>
+                            <option key={temp.id} name={temp.name}>
                                 {temp.name}
                             </option>
                         );
