@@ -1,5 +1,6 @@
 const { Router } = require('express');
 const { getAllDogs, getTemperaments, getAllDogsByName, getDogByID, postDog, deleteDog, putDog } = require('../controllers/controller.js');
+const { Temperament }  = require('../db.js')
 
 const router = Router();
 
@@ -39,7 +40,12 @@ router.post('/', async (req, res) => {
             throw new Error ("El perro debe tener al menos un temperamento");
         }
         const newDog = await postDog(name, image, minHeight, maxHeight, minWeight, maxWeight, life_span);
-        await newDog.addTemperament(temperaments);
+        const temp = await Temperament.findAll({
+            where: {
+                name: temperaments
+            }
+        })
+        await newDog.addTemperament(temp);
         res.status(200).json({ message: `Se creó el perro ${newDog.name} con el id ${newDog.id}` });
     } catch (error) {
         res.status(400).json({ error: error.message });
