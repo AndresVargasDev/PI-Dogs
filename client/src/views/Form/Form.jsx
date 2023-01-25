@@ -63,7 +63,7 @@ const Form = () => {
 
 
     const validate = (form) => {
-        if (form.name.length < 3) { setErrors({ ...errors, name: "El nombre no puede se menor a 3 letras" }) }
+        if (form.name.length < 3) { setErrors({ ...errors, name: "El nombre no puede ser menor a 3 letras" }) }
         // else if (form.minHeight <= 0) { setErrors({ ...errors, minHeight: "La altura minima no puede ser igual a 0 o negativa" }) }
         // if (form.maxHeight <= 0) { setErrors({ ...errors, maxHeight: "La altura maxima no puede ser igual a 0 o negativa" }) }
         // if (form.minWeight <= 0) { setErrors({ ...errors, minWeight: "El peso minimo vacio no puede ser igual a 0 negativo" }) }

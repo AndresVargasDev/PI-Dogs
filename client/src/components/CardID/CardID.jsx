@@ -1,5 +1,4 @@
 import style from './CardID.module.css'
-// import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 const CardID = () => {
@@ -8,9 +7,6 @@ const CardID = () => {
 
     return (
         <div className={style.Card}>
-            {/* <Link to="/home">
-                <button>Back</button>
-            </Link> */}
             <img className={style.img} src={dog.image} alt={dog.name} />
             <div className={style.name}>
                 <p>{dog.name}</p>
