@@ -26,10 +26,12 @@ const Home = () => {
         if (value === "A-Z") {
             dogsSorted = dogs.sort((a, b) => a.name.localeCompare(b.name));
             setItems([]);
+            setCurrentPage(0);
             setItems([...dogsSorted].splice(0, dogsPerPage));
         } else if (value === "Z-A") {
             dogsSorted = dogs.sort((a, b) => b.name.localeCompare(a.name));
             setItems([]);
+            setCurrentPage(0);
             setItems([...dogsSorted].splice(0, dogsPerPage));
         }
     }
