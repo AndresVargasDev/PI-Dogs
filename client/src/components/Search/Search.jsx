@@ -1,6 +1,7 @@
 import { useDispatch } from 'react-redux'
 import { useState } from 'react';
 import { getDogsByName } from '../../redux/actions';
+import { Link } from 'react-router-dom';
 
 const Search = () => {
     const dispatch = useDispatch();
@@ -21,7 +22,9 @@ const Search = () => {
     return (
         <div>
             <input id="search" type="search" placeholder="Ingrese el nombre a buscar..." onChange={searchHandler} value={search.name} />
-            <button type="submit" onClick={submitHandler}>Buscar</button>
+            <Link to ="/search">
+                <button type="submit" onClick={submitHandler}>Buscar</button>
+            </Link>
         </div>
     )
 }

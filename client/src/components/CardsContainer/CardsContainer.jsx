@@ -3,8 +3,7 @@ import style from './CardsContainer.module.css'
 
 
 
-const CardsContainer = ({dogs}) => {
-    
+const CardsContainer = ({ dogs }) => {
     return (
         <div className={style.Container}>
             {dogs.map(dog => {

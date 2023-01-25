@@ -15,11 +15,11 @@ const Home = () => {
     const dogsPerPage = 8;
     const dogs = useSelector(state => state.dogs);
     const [items, setItems] = useState([])
+    const [currentPage, setCurrentPage] = useState(0);
+
     if(dogs[0] && !items[0]){
         setItems([...dogs].splice(0, dogsPerPage));
     };
-    const [currentPage, setCurrentPage] = useState(0);
-
     
     const prevHandler = () => {
         const prevPage = currentPage - 1;

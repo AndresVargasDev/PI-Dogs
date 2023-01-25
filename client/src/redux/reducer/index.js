@@ -8,6 +8,7 @@ import {
 const initialState = {
     dogs: [],
     dog: [],
+    dogsName: [],
     temperaments: []
 };
 
@@ -20,7 +21,7 @@ const rootReducer = (state = initialState, action) => {
         case GET_DOG_BY_ID:
             return { ...state, dog: action.payload }
         case GET_DOGS_BY_NAME:
-            return { ...state, dogs: action.payload }
+            return { ...state, dogsName: action.payload }
         default:
             return { ...state };
     }
