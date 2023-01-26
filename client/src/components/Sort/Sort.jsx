@@ -1,4 +1,3 @@
-
 const Sort = ({sortHandler}) => {
     
     return (

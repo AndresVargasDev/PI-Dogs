@@ -12,6 +12,8 @@ const Form = () => {
 
     const allTemperaments = useSelector(state => state.temperaments);
 
+    const temperamentsSorted = allTemperaments.sort((a, b) => a.name.localeCompare(b.name));
+
     const [form, setForm] = useState({
         name: "",
         image: "",
@@ -83,8 +85,6 @@ const Form = () => {
             })
         }
     }
-
-    let temperamentsSorted = allTemperaments.sort((a, b) => a.name.localeCompare(b.name));
 
     return (
         <form onSubmit={submitHandler}>

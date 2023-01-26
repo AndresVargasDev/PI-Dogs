@@ -3,24 +3,28 @@ import CardsContainer from "../../components/CardsContainer/CardsContainer";
 import Search from "../../components/Search/Search";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllDogs } from "../../redux/actions";
+import { getAllDogs, getAllTemperaments } from "../../redux/actions";
 import Pagination from "../../components/Pagination/Pagination"
 import Sort from "../../components/Sort/Sort";
+import TemperamentsFilter from "../../components/TemperamentsFilter/TemperamentsFilter";
 
 const Home = () => {
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(getAllDogs());
+        dispatch(getAllTemperaments());
     }, [dispatch]);
 
-    const dogsPerPage = 8;
+    let dogsSorted = [];
+    let dogFilter = [];
     const dogs = useSelector(state => state.dogs);
+    const allTemperaments = useSelector(state => state.temperaments);
+    const dogsPerPage = 8;
     const [items, setItems] = useState([])
     const [currentPage, setCurrentPage] = useState(0);
-    let dogsSorted = [];
-    if (dogs[0] && !items[0]) {
-        setItems([...dogs].splice(0, dogsPerPage));
-    }
+    const temperamentsSorted = allTemperaments.sort((a, b) => a.name.localeCompare(b.name));
+    if (dogs[0] && !items[0]) setItems([...dogs].splice(0, dogsPerPage));
+
     const sortHandler = (event) => {
         const value = event.target.value;
         if (value === "A-Z") {
@@ -34,6 +38,16 @@ const Home = () => {
             setCurrentPage(0);
             setItems([...dogsSorted].splice(0, dogsPerPage));
         }
+    }
+
+    const temperamentsHandler = (event) => {
+        const value = event.target.value;
+        dogs.map(dog => {
+            const dogTemp = [];
+            if (dog.temperaments) dogTemp.push(...dog.temperaments.split(", "));
+            if (dogTemp.includes(value)) dogFilter.push(dog);
+        });
+        setItems([...dogFilter]);
     }
 
     const prevHandler = () => {
@@ -61,9 +75,11 @@ const Home = () => {
             <br />
             <Pagination prevHandler={prevHandler} nextHandler={nextHandler} />
             <br />
+            <TemperamentsFilter temperamentsSorted={temperamentsSorted} temperamentsHandler={temperamentsHandler} />
+            <br />
             <Sort sortHandler={sortHandler} />
             <br />
-            <CardsContainer dogs={items} />
+            <CardsContainer dogs={items}/>
             <br />
             <Pagination prevHandler={prevHandler} nextHandler={nextHandler} />
         </div>
