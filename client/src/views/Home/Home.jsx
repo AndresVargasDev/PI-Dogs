@@ -1,15 +1,20 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllDogs, getAllTemperaments, resetFilter } from "../../redux/actions";
+import { getAllDogs, getAllTemperaments, resetFilter, temperamentFilter } from "../../redux/actions";
 import { CardsContainer, Pagination, TemperamentsFilter, Search, Sort } from "../../components/index"
 
 const Home = () => {
     const dispatch = useDispatch();
     const dogs = useSelector(state => state.dogs);
+    const allTemperaments = useSelector(state => state.temperaments);
     const filter = useSelector(state => state.filter);
-    const [items, setItems] = useState([]);
     const dogsPerPage = 8;
+    const [items, setItems] = useState([]);
     const [currentPage, setCurrentPage] = useState(0);
+    const [form, setForm] = useState({ temperaments: [] });
+    const temperamentsSorted = allTemperaments.sort((a, b) => a.name.localeCompare(b.name));
+
+    if (dogs.length > 0 && items.length === 0) setItems([...dogs].splice(0, dogsPerPage));
 
     useEffect(() => {
         dispatch(getAllDogs());
@@ -19,12 +24,18 @@ const Home = () => {
     useEffect(() => {
         if (filter === true) {
             setCurrentPage(0);
-            setItems([...dogs]);
+            setItems([...dogs].splice(0, dogsPerPage));
             dispatch(resetFilter());
         }
-    }, [dispatch,filter,dogs]);
+    }, [dispatch, filter, dogs]);
 
-    if (dogs.length > 0 && items.length === 0) setItems([...dogs].splice(0, dogsPerPage));
+    const temperamentsHandler = (event) => {
+        const value = event.target.value;
+        setForm({
+            ...form, temperaments: [...form.temperaments, value],
+        });
+        dispatch(temperamentFilter(dogs, value));
+    }
 
     const prevHandler = () => {
         const prevPage = currentPage - 1;
@@ -44,6 +55,7 @@ const Home = () => {
     }
 
     const clearHandler = () => {
+        form.temperaments = [];
         dispatch(getAllDogs());
     }
 
@@ -53,9 +65,9 @@ const Home = () => {
             <br />
             <Search />
             <br />
-            <TemperamentsFilter dogs={dogs} />
+            <TemperamentsFilter form={form} temperamentsSorted={temperamentsSorted} temperamentsHandler={temperamentsHandler} />
             <br />
-            <Sort dogs={items} />
+            <Sort dogs={dogs} />
             <br />
             <button type="submit" onClick={clearHandler}>Limpiar</button>
             <br />
