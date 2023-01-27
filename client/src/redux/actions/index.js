@@ -3,7 +3,7 @@ export const GET_ALL_DOGS = "GET_ALL_DOGS";
 export const GET_ALL_TEMPERAMENTS = "GET_ALL_TEMPERAMENTS";
 export const GET_DOG_BY_ID = "GET_DOG_BY_ID";
 export const GET_DOGS_BY_NAME = "GET_DOGS_BY_NAME";
-export const CHANGE_FILTER = "CHANGE_FILTER";
+export const RESET_FILTER = "RESET_FILTER";
 export const SORT_FILTER_A_Z = "SORT_FILTER_A_Z";
 export const TEMPERAMENT_FILTER = "TEMPERAMENT_FILTER";
 
@@ -41,9 +41,9 @@ export const getDogsByName = (name) => async (dispatch) => {
     }
 }
 
-export const changeFilter = () => {
+export const resetFilter = () => {
     return function (dispatch) {
-        dispatch({ type: CHANGE_FILTER })
+        dispatch({ type: RESET_FILTER })
     }
 }
 
