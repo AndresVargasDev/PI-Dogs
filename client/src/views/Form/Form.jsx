@@ -44,7 +44,6 @@ const Form = () => {
     }
 
     const submitHandler = (event) => {
-        console.log(form)
         event.preventDefault();
         axios.post("http://localhost:3001/dogs", form)
             .then(res => alert(res))

@@ -1,6 +1,6 @@
 import './App.css';
 import { Route, useLocation } from "react-router-dom";
-import { LandingPage, Home, Form, DetailDog, SearchDog } from './views';
+import { LandingPage, Home, Form, DetailDog } from './views';
 import NavBar from './components/NavBar/NavBar'
 
 function App() {
@@ -19,9 +19,6 @@ function App() {
       </Route>
       <Route exact path="/home/:id">
         <DetailDog />
-      </Route>
-      <Route exact path="/search">
-        <SearchDog />
       </Route>
     </div>
   );

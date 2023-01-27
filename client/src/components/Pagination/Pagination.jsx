@@ -1,6 +1,6 @@
 import React from "react";
 
-const Pagination = ({prevHandler, nextHandler}) => {
+const Pagination = ({ prevHandler, nextHandler }) => {
 
     return (
         <div>
