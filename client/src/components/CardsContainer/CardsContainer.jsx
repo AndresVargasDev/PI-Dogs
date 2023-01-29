@@ -5,7 +5,7 @@ import style from './CardsContainer.module.css'
 
 const CardsContainer = ({ dogs }) => {
     return (
-        <div className={style.Container}>
+        <div className={style.container}>
             {dogs.map(dog => {
                 return <Card
                     key={dog.id}

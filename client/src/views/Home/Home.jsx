@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import { React, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllDogs, getAllTemperaments, resetFilter, temperamentFilter } from "../../redux/actions";
-import { CardsContainer, Pagination, TemperamentsFilter, Search, Sort } from "../../components/index"
+import { CardsContainer, Pagination, TemperamentsFilter, Search, Sort } from "../../components/index";
+import style from './Home.module.css';
 
 const Home = () => {
     const dispatch = useDispatch();
@@ -60,7 +61,7 @@ const Home = () => {
     }
 
     return (
-        <div>
+        <div className={style.container}>
             <p>Home</p>
             <br />
             <Search />

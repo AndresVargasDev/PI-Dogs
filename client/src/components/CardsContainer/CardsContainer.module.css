@@ -1,9 +1,10 @@
-.Container{
-    border: 1px solid black;
-    display: flex ;
-    flex-direction: row;
-    border-radius: 15px;
+.container {
+    width: 100%;
+    max-width: 1200px;
+    height: 430px;
+    display: flex;
     flex-wrap: wrap;
-    gap: 1em;
-    justify-content: space-around;
+    justify-content: center;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
+
