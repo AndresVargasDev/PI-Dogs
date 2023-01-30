@@ -1,8 +1,30 @@
-.mainContainer{
-    background-color: aquamarine;
+.container{
     display: flex;
-    flex-direction: row;
-    justify-content: space-around;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 1%;
+    padding-bottom: 1%;
+    padding-left: 5%;
+    padding-right: 5%;
+    background-color: rgba(0, 0, 0, 0.6);
     border-radius: 15px;
-    border: 1px solid black;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.container img {
+    height: 60px;
+    width: auto;
+}
+
+.container ul li {
+    list-style-type: none;
+    display: inline-block;
+    padding: 10px 20px;
+    color: #f1f1f1;
+    font-weight: bold;
+}
+
+.container ul li:hover {
+    color: #029ca6;
+    transition: .3s;
 }

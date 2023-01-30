@@ -1,6 +1,6 @@
 import { React, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { apiDbFilter,getAllDogs, getAllTemperaments, resetFilter, resetDog, temperamentFilter } from "../../redux/actions";
+import { apiDbFilter, getAllDogs, getAllTemperaments, resetFilter, resetDog, temperamentFilter } from "../../redux/actions";
 import { APIDBFilter, CardsContainer, Pagination, TemperamentsFilter, Search, SortAZ, SortWeight } from "../../components/index";
 import style from './Home.module.css';
 
