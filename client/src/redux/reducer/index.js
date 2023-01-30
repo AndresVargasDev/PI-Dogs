@@ -1,12 +1,14 @@
 import {
+    API_DB_FILTER,
     GET_ALL_DOGS,
     GET_ALL_TEMPERAMENTS,
     GET_DOG_BY_ID,
     GET_DOGS_BY_NAME,
-    RESET_FILTER,
     SORT_FILTER_A_Z,
     TEMPERAMENT_FILTER,
-    SORT_FILTER_WEIGHT
+    SORT_FILTER_WEIGHT,
+    RESET_FILTER,
+    RESET_DOG
 
 } from '../actions'
 
@@ -31,10 +33,14 @@ const rootReducer = (state = initialState, action) => {
             return { ...state, dogs: action.payload, filter: true }
         case TEMPERAMENT_FILTER:
             return { ...state, dogs: action.payload, filter: true }
+        case API_DB_FILTER:
+            return { ...state, dogs: action.payload, filter: true }
         case SORT_FILTER_WEIGHT:
             return { ...state, dogs: action.payload, filter: true }
         case RESET_FILTER:
             return { ...state, filter: false }
+        case RESET_DOG:
+            return { ...state, dog: [] }
         default:
             return { ...state };
     }

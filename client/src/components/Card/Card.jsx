@@ -9,7 +9,7 @@ const Card = (props) => {
             <p className={style.temperaments}>{props.temperaments}</p>
             <p className={style.weightProps}>{props.minWeight} - {props.maxWeight} kg</p>
             <Link to={`/home/${props.id}`}>
-                <p className={style.enlace}>More inf...</p>
+                <p className={style.enlace}>Details</p>
             </Link>
         </div>
     )

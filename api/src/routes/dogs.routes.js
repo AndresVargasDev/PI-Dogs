@@ -1,6 +1,6 @@
 const { Router } = require('express');
 const { getAllDogs, getTemperaments, getAllDogsByName, getDogByID, postDog, deleteDog, putDog } = require('../controllers/controller.js');
-const { Temperament }  = require('../db.js')
+const { Temperament } = require('../db.js')
 
 const router = Router();
 
@@ -35,11 +35,11 @@ router.get('/:id', async (req, res) => {
 router.post('/', async (req, res) => {
     try {
         getTemperaments();
-        const { name, image, minHeight, maxHeight, minWeight, maxWeight, life_span, temperaments } = req.body;
-        if(temperaments.length === 0){
-            throw new Error ("The dog must have at least one temperament");
+        const { name, image, minHeight, maxHeight, minWeight, maxWeight, minLifeSpan, maxLifeSpan, temperaments } = req.body;
+        if (temperaments.length === 0) {
+            throw new Error("The dog must have at least one temperament");
         }
-        const newDog = await postDog(name, image, minHeight, maxHeight, minWeight, maxWeight, life_span);
+        const newDog = await postDog(name, image, minHeight, maxHeight, minWeight, maxWeight, minLifeSpan, maxLifeSpan);
         const temp = await Temperament.findAll({
             where: {
                 name: temperaments

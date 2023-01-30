@@ -1,10 +1,10 @@
-const TemperamentsFilter = ({ form, temperamentsSorted, temperamentsHandler }) => {
+const TemperamentsFilter = ({ form, allTemperaments, temperamentsHandler }) => {
 
     return (
         <div>
             <select onChange={temperamentsHandler}>
                 <option disabled defaultValue selected> Select temperament to filter</option>
-                {temperamentsSorted.map((temp) => {
+                {allTemperaments.map((temp) => {
                     return (
                         <option key={temp.id} name={temp.name}>
                             {temp.name}
@@ -13,7 +13,7 @@ const TemperamentsFilter = ({ form, temperamentsSorted, temperamentsHandler }) =
                 })}
             </select>
             <div>
-                <h4>Selected temperaments:</h4>
+                <h4>Filtered temperaments:</h4>
                 {form.temperaments.map((el) => (
                     <div key={el}>
                         <p>{el}</p>

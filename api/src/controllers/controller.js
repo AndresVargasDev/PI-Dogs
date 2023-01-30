@@ -13,8 +13,10 @@ const getDogsApi = async () => {
                 maxHeight: parseInt(dog.height.metric.split("-")[1]),
                 minWeight: parseInt(dog.weight.metric.split("-")[0]),
                 maxWeight: parseInt(dog.weight.metric.split("-")[1]),
-                life_span: dog.life_span,
-                temperaments: dog.temperament
+                minLifeSpan: parseInt(dog.life_span.split("-")[0]),
+                maxLifeSpan: parseInt(dog.life_span.split("-")[1]),
+                temperaments: dog.temperament,
+                from: "API"
             };
         });
         return allDogs;
@@ -44,8 +46,10 @@ const getAllDogs = async () => {
                 maxHeight: dog.maxHeight,
                 minWeight: dog.minWeight,
                 maxWeight: dog.maxWeight,
-                life_span: dog.life_span,
-                temperaments: dog.temperaments.map(temp => { return temp.name }).join(', ')
+                minLifeSpan: dog.minLifeSpan,
+                maxLifeSpan: dog.maxLifeSpan,
+                temperaments: dog.temperaments.map(temp => { return temp.name }).join(', '),
+                from: dog.from
             }
         })
         return [...allDogsApi, ...allDogsDbWithTemps];
@@ -103,24 +107,27 @@ const getTemperaments = async () => {
     }
 }
 
-const postDog = async (name, image, minHeight, maxHeight, minWeight, maxWeight, life_span) => {
+const postDog = async (name, image, minHeight, maxHeight, minWeight, maxWeight, minLifeSpan, maxLifeSpan) => {
     try {
         const dogsApiDB = await getAllDogs();
         const dogName = dogsApiDB.find(dog => dog.name === name);
         if (dogName) {
             throw new Error(`Dog ${name} already exists in the API or in the Database`);
         }
-        else if (!name || !minHeight || !maxHeight || !minWeight || !maxWeight || !life_span) {
+        else if (!name || !minHeight || !maxHeight || !minWeight || !maxWeight || !minLifeSpan || !maxLifeSpan) {
             throw new Error("You must fill in all the required information");
         }
-        else if (minHeight <= 0 || maxHeight <= 0 || minWeight <= 0 || maxWeight <= 0) {
-            throw new Error("The height or weight value cannot be negative");
+        else if (minHeight <= 0 || maxHeight <= 0 || minWeight <= 0 || maxWeight <= 0 || minLifeSpan <= 0 || maxLifeSpan <= 0) {
+            throw new Error("The height, weight ow life span value cannot be negative");
         }
         else if (minHeight >= maxHeight) {
             throw new Error("The minimum height is greater than or equal to the maximum height, please validate data");
         }
         else if (minWeight >= maxWeight) {
             throw new Error("The minimum weight is greater than or equal to the maximum weight, please validate data");
+        }
+        else if (minLifeSpan >= maxLifeSpan) {
+            throw new Error("The minimum life span is greater than or equal to the maximum weight, please validate data");
         }
         const newDog = await Dog.create({
             name,
@@ -129,7 +136,9 @@ const postDog = async (name, image, minHeight, maxHeight, minWeight, maxWeight, 
             maxHeight,
             minWeight,
             maxWeight,
-            life_span
+            minLifeSpan,
+            maxLifeSpan,
+            from: "DataBase"
         });
         return newDog;
     } catch (error) {
@@ -151,7 +160,7 @@ const deleteDog = async (id) => {
     }
 }
 
-const putDog = async (id, name, image, minHeight, maxHeight, minWeight, maxWeight, life_span) => {
+const putDog = async (id, name, image, minHeight, maxHeight, minWeight, maxWeight, minLifepan, maxLifepan) => {
     try {
         const updateDog = await Dog.findByPk(id);
         updateDog.name = name;
@@ -160,7 +169,8 @@ const putDog = async (id, name, image, minHeight, maxHeight, minWeight, maxWeigh
         updateDog.maxHeight = maxHeight;
         updateDog.minWeight = minWeight;
         updateDog.maxWeight = maxWeight;
-        updateDog.life_span = life_span
+        updateDog.minLifepan = minLifepan;
+        updateDog.minLifepan = minLifepan;
         await updateDog.save();
         return updateDog;
     } catch (error) {

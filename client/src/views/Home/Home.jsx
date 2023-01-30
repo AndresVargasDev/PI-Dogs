@@ -1,7 +1,7 @@
 import { React, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllDogs, getAllTemperaments, resetFilter, temperamentFilter } from "../../redux/actions";
-import { CardsContainer, Pagination, TemperamentsFilter, Search, SortAZ, SortWeight } from "../../components/index";
+import { apiDbFilter,getAllDogs, getAllTemperaments, resetFilter, resetDog, temperamentFilter } from "../../redux/actions";
+import { APIDBFilter, CardsContainer, Pagination, TemperamentsFilter, Search, SortAZ, SortWeight } from "../../components/index";
 import style from './Home.module.css';
 
 const Home = () => {
@@ -13,13 +13,14 @@ const Home = () => {
     const [items, setItems] = useState([]);
     const [currentPage, setCurrentPage] = useState(0);
     const [form, setForm] = useState({ temperaments: [] });
-    const temperamentsSorted = allTemperaments.sort((a, b) => a.name.localeCompare(b.name));
+    const [formAPIDB, setformAPIDB] = useState({ filterApiDB: [] });
 
     if (dogs.length > 0 && items.length === 0) setItems([...dogs].splice(0, dogsPerPage));
 
     useEffect(() => {
         dispatch(getAllDogs());
         dispatch(getAllTemperaments());
+        dispatch(resetDog());
     }, [dispatch]);
 
     useEffect(() => {
@@ -36,6 +37,14 @@ const Home = () => {
             ...form, temperaments: [...form.temperaments, value],
         });
         dispatch(temperamentFilter(dogs, value));
+    }
+
+    const APIDBHandler = (event) => {
+        const value = event.target.value;
+        setformAPIDB({
+            ...formAPIDB, filterApiDB: [...formAPIDB.filterApiDB, value],
+        });
+        dispatch(apiDbFilter(dogs, value));
     }
 
     const prevHandler = () => {
@@ -56,6 +65,7 @@ const Home = () => {
     }
 
     const clearHandler = () => {
+        formAPIDB.filterApiDB = [];
         form.temperaments = [];
         dispatch(getAllDogs());
     }
@@ -64,7 +74,9 @@ const Home = () => {
         <div className={style.container}>
             <Search />
             <br />
-            <TemperamentsFilter form={form} temperamentsSorted={temperamentsSorted} temperamentsHandler={temperamentsHandler} />
+            <APIDBFilter formAPIDB={formAPIDB} APIDBHandler={APIDBHandler} />
+            <br />
+            <TemperamentsFilter form={form} allTemperaments={allTemperaments} temperamentsHandler={temperamentsHandler} />
             <br />
             <SortAZ dogs={dogs} />
             <br />

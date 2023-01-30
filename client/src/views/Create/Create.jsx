@@ -1,7 +1,8 @@
 import { useState, useEffect, React } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllTemperaments } from '../../redux/actions';
-import axios from 'axios'
+import style from './Create.module.css';
+import axios from 'axios';
 
 const Create = () => {
     const dispatch = useDispatch();
@@ -12,8 +13,6 @@ const Create = () => {
 
     const allTemperaments = useSelector(state => state.temperaments);
 
-    const temperamentsSorted = allTemperaments.sort((a, b) => a.name.localeCompare(b.name));
-
     const [form, setForm] = useState({
         name: "",
         image: "",
@@ -21,7 +20,8 @@ const Create = () => {
         maxHeight: 0,
         minWeight: 0,
         maxWeight: 0,
-        life_span: "",
+        minLifeSpan: 0,
+        maxLifeSpan: 0,
         temperaments: []
     });
 
@@ -39,6 +39,17 @@ const Create = () => {
         axios.post("http://localhost:3001/dogs", form)
             .then(res => alert(res))
             .catch(error => alert(error));
+        setForm({
+            name: "",
+            image: "",
+            minHeight: 0,
+            maxHeight: 0,
+            minWeight: 0,
+            maxWeight: 0,
+            minLifeSpan: 0,
+            maxLifeSpan: 0,
+            temperaments: []
+        })
     }
 
     function selectHandler(event) {
@@ -68,63 +79,57 @@ const Create = () => {
     }
 
     return (
-        <form onSubmit={submitHandler}>
+        <form onSubmit={submitHandler} className={style.form}>
+            <h2> CREATE DOG! </h2>
+            <label>Name: </label>
+            <input type="text" value={form.name} name="name" onChange={changeHandler} />
+            {errors.name && <span>{errors.name}</span>}
+
+            <label>Image: </label>
+            <input type="url" value={form.image} name="image" onChange={changeHandler} />
+
+            <label>Min. Height: </label>
+            <input type="number" value={form.minHeight} name="minHeight" onChange={changeHandler} />
+            {errors.minHeight && <span>{errors.minHeight}</span>}
+
+            <label>Max. Height: </label>
+            <input type="number" value={form.maxHeight} name="maxHeight" onChange={changeHandler} />
+            {errors.maxHeight && <span>{errors.maxHeight}</span>}
+
+            <label>Min Weight: </label>
+            <input type="number" value={form.minWeight} name="minWeight" onChange={changeHandler} />
+            {errors.minWeight && <span>{errors.minWeight}</span>}
+
+            <label>Max Weight: </label>
+            <input type="number" value={form.maxWeight} name="maxWeight" onChange={changeHandler} />
+            {errors.maxWeight && <span>{errors.maxWeight}</span>}
+
+            <label>Min Life Span: </label>
+            <input type="number" value={form.minLifeSpan} name="minLifeSpan" onChange={changeHandler} />
+            {errors.minLifeSpan && <span>{errors.minLifeSpan}</span>}
+
+            <label>Max Life Span: </label>
+            <input type="number" value={form.maxLifeSpan} name="maxLifeSpan" onChange={changeHandler} />
+            {errors.maxLifeSpan && <span>{errors.maxLifeSpan}</span>}
+
+            <label>Temperaments</label>
+            <select onChange={selectHandler}>
+                <option disabled defaultValue selected> Select one or more temperaments</option>
+                {allTemperaments.map((temp) => {
+                    return (
+                        <option key={temp.id} name={temp.name}>
+                            {temp.name}
+                        </option>
+                    );
+                })}
+            </select>
+            <h4>Selected temperaments: </h4>
             <div>
-                <label>Name: </label>
-                <input type="text" value={form.name} name="name" onChange={changeHandler} />
-                {errors.name && <span>{errors.name}</span>}
+                {form.temperaments.map((el) => (
+                    <><span key={el}>{el}</span><button onClick={() => deleteHandler(el)}>x</button></>
+                ))}
             </div>
-            <div>
-                <label>Image: </label>
-                <input type="url" value={form.image} name="image" onChange={changeHandler} />
-            </div>
-            <div>
-                <label>Min. Height: </label>
-                <input type="number" value={form.minHeight} name="minHeight" onChange={changeHandler} />
-                {errors.minHeight && <span>{errors.minHeight}</span>}
-            </div>
-            <div>
-                <label>Max. Height: </label>
-                <input type="number" value={form.maxHeight} name="maxHeight" onChange={changeHandler} />
-                {errors.maxHeight && <span>{errors.maxHeight}</span>}
-            </div>
-            <div>
-                <label>Min Weight: </label>
-                <input type="number" value={form.minWeight} name="minWeight" onChange={changeHandler} />
-                {errors.minWeight && <span>{errors.minWeight}</span>}
-            </div>
-            <div>
-                <label>Max Weight: </label>
-                <input type="number" value={form.maxWeight} name="maxWeight" onChange={changeHandler} />
-                {errors.maxWeight && <span>{errors.maxWeight}</span>}
-            </div>
-            <div>
-                <label>Life Span: </label>
-                <input type="text" value={form.life_span} name="life_span" onChange={changeHandler} />
-                {errors.life_span && <span>{errors.life_span}</span>}
-            </div>
-            <div>
-                <label>Temperaments</label>
-                <select onChange={selectHandler}>
-                    <option disabled defaultValue selected> Select one or more temperaments</option>
-                    {temperamentsSorted.map((temp) => {
-                        return (
-                            <option key={temp.id} name={temp.name}>
-                                {temp.name}
-                            </option>
-                        );
-                    })}
-                </select>
-                <div>
-                    <h4>Selected temperaments: </h4>
-                    {form.temperaments.map((el) => (
-                        <div key={el}>
-                            <p>{el}</p>
-                            <button onClick={() => deleteHandler(el)}>x</button>
-                        </div>
-                    ))}
-                </div>
-            </div>
+            <br />
             <button type="submit">Create Dog!</button>
         </form>
     )

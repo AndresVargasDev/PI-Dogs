@@ -1,0 +1,29 @@
+.form {
+    width: 450px;
+    margin: auto;
+    background: #f1f1f1;
+    padding: 10px 20px;
+    box-sizing: border-box;
+    margin-top: 20px;
+    border-radius: 10px;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.form h2{
+    font-size: 30px;
+}
+
+.form input {
+    width: 100%;
+    padding: 2px;
+    box-sizing: border-box;
+}
+
+.form select{
+    width: 100%;
+}
+
+.form button{
+    background: #2e6189;
+    color:#f1f1f1;
+}

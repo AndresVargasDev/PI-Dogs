@@ -39,10 +39,19 @@ module.exports = (sequelize) => {
       validate: { min: 1, max: 100 },
       allowNull: false,
     },
-    life_span: {
-      type: DataTypes.STRING,
+    minLifeSpan: {
+      type: DataTypes.INTEGER,
+      validate: { min: 1, max: 20 },
       allowNull: false,
-    }
+    },
+    maxLifeSpan: {
+      type: DataTypes.INTEGER,
+      validate: { min: 1, max: 20 },
+      allowNull: false,
+    },
+    from: {
+      type: DataTypes.STRING,
+    },
   }, {
     timestamps: false,
   }
