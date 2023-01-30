@@ -6,10 +6,7 @@ const Card = (props) => {
         <div className={style.card}>
             <img className={style.img} src={props.image} alt={props.name} />
             <h2 className={style.name}>{props.name}</h2>
-            <div className={style.temperaments}>
-                <h3>Temperaments:</h3>
-                <p>{props.temperaments}</p>
-            </div>
+            <p className={style.temperaments}>{props.temperaments}</p>
             <p className={style.weightProps}>{props.minWeight} - {props.maxWeight} kg</p>
             <Link to={`/home/${props.id}`}>
                 <p className={style.enlace}>More inf...</p>

@@ -130,8 +130,6 @@ const postDog = async (name, image, minHeight, maxHeight, minWeight, maxWeight, 
             minWeight,
             maxWeight,
             life_span
-
-            
         });
         return newDog;
     } catch (error) {

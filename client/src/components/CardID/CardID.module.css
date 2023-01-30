@@ -1,18 +1,35 @@
-.Card {
-    background-color: #62cdffa2;
-    display: flex;
-    border: 1px solid black;
+.card {
+    width: 1200px;
+    height: 500px;
     border-radius: 10px;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 28%;
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    display: flex;
+    margin: 5%;
+    text-align: center;
+    /* transition: all 0.25s; */
+    background: #f1f1f1;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
 .img {
-    margin-top: 8%;
-    width: 80%;
-    height: 80%;
-    border-radius: 8px;
-    border: 1px solid black;
+    width: 60%;
+    height: 100%;
+    background-size: cover;
+}
+
+.container {
+    width: 40%;
+    height: 100%;
+    display: grid;
+    /* padding: 10px 15px; */
+}
+
+.name {
+    color: #029ca6;
+}
+
+.container span {
+    color: black;
+    font-size:15px;
 }

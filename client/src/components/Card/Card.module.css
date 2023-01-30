@@ -1,12 +1,13 @@
 .card {
-    width: 330px;
-    height: 430px;
+    width: 250px;
+    height: 450px;
     border-radius: 8px;
     box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
     overflow: hidden;
-    margin: 20px;
+    margin: 2%;
     text-align: center;
     transition: all 0.25s;
+    background: #f1f1f1;
 }
 
 .card:hover{
@@ -15,11 +16,12 @@
 }
 
 .img {
-    width: 330px;
+    width: 250px;
     height: 220px;
 }
 
 .name {
+    color: #029ca6;
     font-weight: 660;
 }
 
@@ -36,6 +38,7 @@
 .enlace {
     font-size: 16px;
     font-weight: 250;
-    color:aquamarine;
+    color: #2f6c98;
+    text-decoration: none;
 }
 

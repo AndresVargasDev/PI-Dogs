@@ -13,7 +13,6 @@ const DetailDog = () => {
 
     return (
         <div>
-            <p>DetailDog</p>
             <CardID />
         </div>
     )
