@@ -9,19 +9,24 @@ const CardID = () => {
         <div className={style.Card}>
             <img className={style.img} src={dog.image} alt={dog.name} />
             <div className={style.name}>
-                <p>{dog.name}</p>
+                <h2>{dog.name}</h2>
             </div>
             <div className={style.weight}>
-                <h3>Peso</h3>
-                <span>min: {dog.minWeight} kg - max: {dog.maxWeight} kg</span>
+                <h3>Weight</h3>
+                <span>{dog.minWeight} kg - {dog.maxWeight} kg</span>
+            </div>
+            <div className={style.height}>
+                <h3>Height</h3>
+                <span>{dog.minHeight} kg - {dog.maxHeight} kg</span>
+            </div>
+            <div className={style.lifeSpan}>
+                <h3>Life Span</h3>
+                <span>{dog.life_span}</span>
             </div>
             <div className={style.temperaments}>
-                <h3>Temperamentos: </h3>
+                <h3>Temperament:</h3>
                 <h4>{dog.temperaments}</h4>
             </div>
-            <p>{dog.minHeight}</p>
-            <p>{dog.maxHeight}</p>
-            <p>{dog.life_span}</p>
         </div>
     )
 }

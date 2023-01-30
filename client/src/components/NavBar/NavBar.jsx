@@ -5,7 +5,7 @@ const NavBar = () => {
     return (
         <div className={style.mainContainer}>
             <Link to="/home">HOME</Link>
-            <Link to="/create">FORM</Link>
+            <Link to="/create">CREATE DOG!</Link>
             <Link to="/">EXIT</Link>
         </div>
     )

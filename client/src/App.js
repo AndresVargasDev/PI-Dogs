@@ -1,6 +1,6 @@
 import './App.css';
 import { Route, useLocation } from "react-router-dom";
-import { LandingPage, Home, Form, DetailDog } from './views';
+import { LandingPage, Home, Create, DetailDog } from './views';
 import NavBar from './components/NavBar/NavBar'
 
 function App() {
@@ -15,7 +15,7 @@ function App() {
         <Home />
       </Route>
       <Route exact path="/create">
-        <Form />
+        <Create />
       </Route>
       <Route exact path="/home/:id">
         <DetailDog />

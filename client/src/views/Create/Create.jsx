@@ -1,9 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, React } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllTemperaments } from '../../redux/actions';
 import axios from 'axios'
 
-const Form = () => {
+const Create = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -25,16 +25,7 @@ const Form = () => {
         temperaments: []
     });
 
-    const [errors, setErrors] = useState({
-        name: "",
-        image: "",
-        minHeight: "",
-        maxHeight: "",
-        minWeight: "",
-        maxWeight: "",
-        life_span: "",
-        temperaments: ""
-    })
+    const [errors, setErrors] = useState({})
 
     const changeHandler = (event) => {
         const property = event.target.name;
@@ -64,7 +55,7 @@ const Form = () => {
 
 
     const validate = (form) => {
-        if (form.name.length < 3) { setErrors({ ...errors, name: "El nombre no puede ser menor a 3 letras" }) }
+        if (form.name.length < 3) { setErrors({ ...errors, name: "The name cannot be less than 3 letters" }) }
         // else if (form.minHeight <= 0) { setErrors({ ...errors, minHeight: "La altura minima no puede ser igual a 0 o negativa" }) }
         // if (form.maxHeight <= 0) { setErrors({ ...errors, maxHeight: "La altura maxima no puede ser igual a 0 o negativa" }) }
         // if (form.minWeight <= 0) { setErrors({ ...errors, minWeight: "El peso minimo vacio no puede ser igual a 0 negativo" }) }
@@ -72,16 +63,7 @@ const Form = () => {
         // if (form.life_span === "") { setErrors({ ...errors, life_span: "El campo de años de vida estimados no puede vacio" }) }
         // if (form.temperaments.length === 0) { setErrors({ ...errors, temperaments: "Debe asignar aunque sea un temperamento" }) }
         else {
-            setErrors({
-                name: "",
-                image: "",
-                minHeight: "",
-                maxHeight: "",
-                minWeight: "",
-                maxWeight: "",
-                life_span: "",
-                temperaments: ""
-            })
+            setErrors({})
         }
     }
 
@@ -124,7 +106,7 @@ const Form = () => {
             <div>
                 <label>Temperaments</label>
                 <select onChange={selectHandler}>
-                    <option disabled defaultValue> Selecciona uno o más temperamentos</option>
+                    <option disabled defaultValue selected> Select one or more temperaments</option>
                     {temperamentsSorted.map((temp) => {
                         return (
                             <option key={temp.id} name={temp.name}>
@@ -134,7 +116,7 @@ const Form = () => {
                     })}
                 </select>
                 <div>
-                    <h4>Temperamentos seleccionados: </h4>
+                    <h4>Selected temperaments: </h4>
                     {form.temperaments.map((el) => (
                         <div key={el}>
                             <p>{el}</p>
@@ -143,9 +125,9 @@ const Form = () => {
                     ))}
                 </div>
             </div>
-            <button type="submit">Enviar</button>
+            <button type="submit">Create Dog!</button>
         </form>
     )
 }
 
-export default Form;
+export default Create;

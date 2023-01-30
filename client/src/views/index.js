@@ -1,7 +1,7 @@
 import LandingPage from "./LandingPage/LandingPage";
 import Home from "./Home/Home";
-import Form from "./Form/Form";
+import Create from "./Create/Create";
 import DetailDog from './DetailDog/DetailDog';
 import Error from './Error/Error'
 
-export { LandingPage, Home, Form, DetailDog, Error }
+export { LandingPage, Home, Create, DetailDog, Error }

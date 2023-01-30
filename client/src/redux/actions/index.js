@@ -51,10 +51,10 @@ export const resetFilter = () => {
 export const sortFilterAZ = (dogs, value) => {
     try {
         let dogsSorted = []
-        if (value === "A-Z") {
+        if (value === "ASC") {
             dogsSorted = dogs.sort((a, b) => a.name.localeCompare(b.name))
         }
-        if (value === "Z-A") {
+        if (value === "DESC") {
             dogsSorted = dogs.sort((a, b) => b.name.localeCompare(a.name))
         }
         return function (dispatch) {

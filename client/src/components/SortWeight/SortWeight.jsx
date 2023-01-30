@@ -12,9 +12,9 @@ const SortWeight = ({ dogs }) => {
     return (
         <div>
             <select onChange={sortHandlerLH}>
-                <option disabled defaultValue> Seleccione el orden</option>
-                <option name="low-high" value="low-high">Menor a mayor</option>
-                <option name="high-low" value="high-low">Mayor a menor</option>
+                <option disabled defaultValue selected>Select order</option>
+                <option name="low-high" value="low-high">Low to high</option>
+                <option name="high-low" value="high-low">High to low</option>
             </select>
         </div>
     )

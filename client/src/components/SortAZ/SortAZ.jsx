@@ -12,9 +12,9 @@ const SortAZ = ({ dogs }) => {
     return (
         <div>
             <select onChange={sortHandlerAZ}>
-                <option disabled defaultValue> Seleccione el orden</option>
-                <option name="A-Z">A-Z</option>
-                <option name="Z-A">Z-A</option>
+                <option disabled defaultValue selected>Select order</option>
+                <option name="ASC">ASC</option>
+                <option name="DESC">DESC</option>
             </select>
         </div>
     )

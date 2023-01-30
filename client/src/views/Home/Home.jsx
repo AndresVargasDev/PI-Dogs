@@ -62,8 +62,6 @@ const Home = () => {
 
     return (
         <div className={style.container}>
-            <p>Home</p>
-            <br />
             <Search />
             <br />
             <TemperamentsFilter form={form} temperamentsSorted={temperamentsSorted} temperamentsHandler={temperamentsHandler} />
@@ -72,7 +70,7 @@ const Home = () => {
             <br />
             <SortWeight dogs={dogs} />
             <br />
-            <button type="submit" onClick={clearHandler}>Limpiar</button>
+            <button type="submit" onClick={clearHandler}>Delete filters</button>
             <br />
             <Pagination prevHandler={prevHandler} nextHandler={nextHandler} />
             <br />

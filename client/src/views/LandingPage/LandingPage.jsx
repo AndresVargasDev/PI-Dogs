@@ -10,7 +10,7 @@ const LandingPage = () => {
                 <br />
                 <h1>Dogs!</h1>
                 <br />
-                <p>En este proyecto encontraran bastante información sobre razas de perros y sus cualidades.</p>
+                <p>In this project you will find a lot of information about dog breeds and their qualities.</p>
                 <Link to="/home">
                     <button>Entrar</button>
                 </Link>

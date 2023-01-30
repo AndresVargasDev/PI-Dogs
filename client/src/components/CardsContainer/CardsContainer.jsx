@@ -1,8 +1,6 @@
 import Card from '../Card/Card'
 import style from './CardsContainer.module.css'
 
-
-
 const CardsContainer = ({ dogs }) => {
     return (
         <div className={style.container}>

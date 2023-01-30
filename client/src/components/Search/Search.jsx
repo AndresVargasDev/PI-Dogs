@@ -22,8 +22,8 @@ const Search = () => {
 
     return (
         <div>
-            <input id="search" type="search" placeholder="Ingrese el nombre a buscar..." onChange={searchHandler} value={search.name} />
-            <button type="submit" onClick={submitHandler} value={search.name}>Buscar</button>
+            <input id="search" type="search" placeholder="search for a breed..." onChange={searchHandler} value={search.name} />
+            <button type="submit" onClick={submitHandler} value={search.name}>Search</button>
         </div>
     )
 }

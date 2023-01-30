@@ -4,8 +4,8 @@ const Pagination = ({ prevHandler, nextHandler }) => {
     
     return (
         <div>
-            <button onClick={prevHandler}>Anterior</button>
-            <button onClick={nextHandler}>Siguiente</button>
+            <button onClick={prevHandler}>Previous</button>
+            <button onClick={nextHandler}>Next</button>
         </div>
     )
 }
