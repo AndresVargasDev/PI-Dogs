@@ -27,14 +27,14 @@ const rootReducer = (state = initialState, action) => {
             return { ...state, dog: action.payload }
         case GET_DOGS_BY_NAME:
             return { ...state, dogs: action.payload, filter: true }
-        case RESET_FILTER:
-            return { ...state, filter: false }
         case SORT_FILTER_A_Z:
             return { ...state, dogs: action.payload, filter: true }
         case TEMPERAMENT_FILTER:
             return { ...state, dogs: action.payload, filter: true }
         case SORT_FILTER_WEIGHT:
             return { ...state, dogs: action.payload, filter: true }
+        case RESET_FILTER:
+            return { ...state, filter: false }
         default:
             return { ...state };
     }
