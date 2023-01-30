@@ -6,7 +6,7 @@ export const GET_DOGS_BY_NAME = "GET_DOGS_BY_NAME";
 export const RESET_FILTER = "RESET_FILTER";
 export const SORT_FILTER_A_Z = "SORT_FILTER_A_Z";
 export const TEMPERAMENT_FILTER = "TEMPERAMENT_FILTER";
-export const SORT_FILTER_L_H = "SORT_FILTER_L_H";
+export const SORT_FILTER_WEIGHT = "SORT_FILTER_WEIGHT";
 
 
 export const getAllDogs = () => {
@@ -95,7 +95,7 @@ export const sortFilterLH = (dogs, value) => {
                 (a.minWeight > b.minWeight) ? 1 : (a.minWeight < b.minWeight) ? -1 : 0);
         }
         return function (dispatch) {
-            dispatch({ type: SORT_FILTER_L_H, payload: dogsSorted })
+            dispatch({ type: SORT_FILTER_WEIGHT, payload: dogsSorted })
         }
     } catch (error) {
         throw new Error(error);

@@ -1,7 +1,7 @@
 import { React, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllDogs, getAllTemperaments, resetFilter, temperamentFilter } from "../../redux/actions";
-import { CardsContainer, Pagination, TemperamentsFilter, Search, Sort } from "../../components/index";
+import { CardsContainer, Pagination, TemperamentsFilter, Search, SortAZ, SortWeight } from "../../components/index";
 import style from './Home.module.css';
 
 const Home = () => {
@@ -68,7 +68,9 @@ const Home = () => {
             <br />
             <TemperamentsFilter form={form} temperamentsSorted={temperamentsSorted} temperamentsHandler={temperamentsHandler} />
             <br />
-            <Sort dogs={dogs} />
+            <SortAZ dogs={dogs} />
+            <br />
+            <SortWeight dogs={dogs} />
             <br />
             <button type="submit" onClick={clearHandler}>Limpiar</button>
             <br />

@@ -6,7 +6,7 @@ import {
     RESET_FILTER,
     SORT_FILTER_A_Z,
     TEMPERAMENT_FILTER,
-    SORT_FILTER_L_H
+    SORT_FILTER_WEIGHT
 
 } from '../actions'
 
@@ -33,7 +33,7 @@ const rootReducer = (state = initialState, action) => {
             return { ...state, dogs: action.payload, filter: true }
         case TEMPERAMENT_FILTER:
             return { ...state, dogs: action.payload, filter: true }
-        case SORT_FILTER_L_H:
+        case SORT_FILTER_WEIGHT:
             return { ...state, dogs: action.payload, filter: true }
         default:
             return { ...state };
