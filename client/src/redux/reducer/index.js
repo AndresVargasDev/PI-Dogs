@@ -5,7 +5,8 @@ import {
     GET_DOGS_BY_NAME,
     RESET_FILTER,
     SORT_FILTER_A_Z,
-    TEMPERAMENT_FILTER
+    TEMPERAMENT_FILTER,
+    SORT_FILTER_L_H
 
 } from '../actions'
 
@@ -31,6 +32,8 @@ const rootReducer = (state = initialState, action) => {
         case SORT_FILTER_A_Z:
             return { ...state, dogs: action.payload, filter: true }
         case TEMPERAMENT_FILTER:
+            return { ...state, dogs: action.payload, filter: true }
+        case SORT_FILTER_L_H:
             return { ...state, dogs: action.payload, filter: true }
         default:
             return { ...state };
