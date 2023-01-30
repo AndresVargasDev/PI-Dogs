@@ -19,7 +19,7 @@ const getDogsApi = async () => {
         });
         return allDogs;
     } catch {
-        throw new Error('No se puede obtener la información de los perros');
+        throw new Error("Can't get dog information");
     }
 }
 
@@ -61,7 +61,7 @@ const getAllDogsByName = async (name) => {
         if (filterName.length > 0) {
             return filterName
         } else {
-            throw new Error(`No se encontró el perro ${name}`)
+            throw new Error(`Dog not found ${name}`)
         }
     } catch (error) {
         throw new Error(error);
@@ -75,7 +75,7 @@ const getDogByID = async (id) => {
         if (filterName.length > 0) {
             return filterName[0];
         } else {
-            throw new Error(`No se encontró el perro de ID ${id}`)
+            throw new Error(`ID dog not found, ID = ${id}`)
         }
     } catch (error) {
         throw new Error(error);
@@ -108,19 +108,19 @@ const postDog = async (name, image, minHeight, maxHeight, minWeight, maxWeight, 
         const dogsApiDB = await getAllDogs();
         const dogName = dogsApiDB.find(dog => dog.name === name);
         if (dogName) {
-            throw new Error(`El perro ${name} ya existe en la API o en la Base de Datos`);
+            throw new Error(`Dog ${name} already exists in the API or in the Database`);
         }
         else if (!name || !minHeight || !maxHeight || !minWeight || !maxWeight || !life_span) {
-            throw new Error("Debe llenar todos los campos obligatorios");
+            throw new Error("You must fill in all the required information");
         }
         else if (minHeight <= 0 || maxHeight <= 0 || minWeight <= 0 || maxWeight <= 0) {
-            throw new Error("El valor de altura o peso no puede ser negativo");
+            throw new Error("The height or weight value cannot be negative");
         }
         else if (minHeight >= maxHeight) {
-            throw new Error("La altura minima es mayor o igual que la altura maxima, por favor validar datos");
+            throw new Error("The minimum height is greater than or equal to the maximum height, please validate data");
         }
         else if (minWeight >= maxWeight) {
-            throw new Error("El peso minimo es mayor o igual que el peso maximo, por favor validar datos");
+            throw new Error("The minimum weight is greater than or equal to the maximum weight, please validate data");
         }
         const newDog = await Dog.create({
             name,

@@ -37,7 +37,7 @@ router.post('/', async (req, res) => {
         getTemperaments();
         const { name, image, minHeight, maxHeight, minWeight, maxWeight, life_span, temperaments } = req.body;
         if(temperaments.length === 0){
-            throw new Error ("El perro debe tener al menos un temperamento");
+            throw new Error ("The dog must have at least one temperament");
         }
         const newDog = await postDog(name, image, minHeight, maxHeight, minWeight, maxWeight, life_span);
         const temp = await Temperament.findAll({
@@ -46,7 +46,7 @@ router.post('/', async (req, res) => {
             }
         })
         await newDog.addTemperament(temp);
-        res.status(200).json({ message: `Se creó el perro ${newDog.name} con el id ${newDog.id}` });
+        res.status(200).json({ message: `Created dog ${newDog.name} with id ${newDog.id}` });
     } catch (error) {
         res.status(400).json({ error: error.message });
     }
@@ -56,7 +56,7 @@ router.delete('/:id', async (req, res) => {
     try {
         const { id } = req.params;
         const delDog = await deleteDog(id);
-        res.status(200).json({ message: `Se eliminó el perro de ID ${delDog}` });
+        res.status(200).json({ message: `Removed dog from ID ${delDog}` });
     } catch (error) {
         res.status(400).json({ error: error.message });
     }
@@ -67,7 +67,7 @@ router.put('/:id', async (req, res) => {
         const { id } = req.params;
         const { name, image, minHeight, maxHeight, minWeight, maxWeight, life_span } = req.body;
         const updatedog = await putDog(id, name, image, minHeight, maxHeight, minWeight, maxWeight, life_span);
-        res.status(200).json({ message: `Se actualizó el perro ${updatedog.name}` },);
+        res.status(200).json({ message: `Updated dog ${updatedog.name}` },);
     } catch (error) {
         res.status(400).json({ error: error.message });
     }
