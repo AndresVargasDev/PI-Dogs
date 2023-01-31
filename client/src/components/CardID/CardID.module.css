@@ -1,13 +1,12 @@
 .card {
     width: 1200px;
-    height: 500px;
+    height: 450px;
     border-radius: 10px;
     box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
     overflow: hidden;
     display: flex;
-    margin: 5%;
+    margin: 4%;
     text-align: center;
-    /* transition: all 0.25s; */
     background: #f1f1f1;
     font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
@@ -21,12 +20,17 @@
 .container {
     width: 40%;
     height: 100%;
-    display: grid;
-    /* padding: 10px 15px; */
+    display: flexbox;
+    padding: 10px 15px;
 }
 
 .name {
+    color: #2e6189;
+}
+
+.container p{
     color: #029ca6;
+    font-size: 15px;
 }
 
 .container span {

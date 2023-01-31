@@ -10,6 +10,7 @@ const CardID = () => {
             <img className={style.img} src={dog.image} alt={dog.name} />
             <div className={style.container}>
                 <h1 className={style.name}>{dog.name}</h1>
+                <p>From: {dog.from}</p>
                 <h4 className={style.weight}>Weight</h4>
                 <span>{dog.minWeight} - {dog.maxWeight} kg</span>
                 <h4 className={style.height}>Height</h4>
