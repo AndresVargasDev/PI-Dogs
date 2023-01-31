@@ -1,7 +1,11 @@
+import React from "react";
+import style from "./TemperamentsFilter.module.css";
+
 const TemperamentsFilter = ({ form, allTemperaments, temperamentsHandler }) => {
 
     return (
-        <div>
+        <div className={style.container}>
+            <h1>Filter by temperament</h1>
             <select onChange={temperamentsHandler}>
                 <option disabled defaultValue selected> Select temperament to filter</option>
                 {allTemperaments.map((temp) => {
@@ -13,11 +17,8 @@ const TemperamentsFilter = ({ form, allTemperaments, temperamentsHandler }) => {
                 })}
             </select>
             <div>
-                <h4>Filtered temperaments:</h4>
                 {form.temperaments.map((el) => (
-                    <div key={el}>
-                        <p>{el}</p>
-                    </div>
+                    <><span key={el}>{el} </span></>
                 ))}
             </div>
         </div>

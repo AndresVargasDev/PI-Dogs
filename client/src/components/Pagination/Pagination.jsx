@@ -1,11 +1,12 @@
 import React from "react";
+import style from "./Pagination.module.css";
 
 const Pagination = ({ prevHandler, nextHandler }) => {
     
     return (
-        <div>
-            <button onClick={prevHandler}>Previous</button>
-            <button onClick={nextHandler}>Next</button>
+        <div className={style.buttons}>
+            <button onClick={prevHandler} className={style.prevButton}>Prev</button>
+            <button onClick={nextHandler} className={style.nextButton}>Next</button>
         </div>
     )
 }

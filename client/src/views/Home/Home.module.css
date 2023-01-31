@@ -1,4 +1,41 @@
 .container {
     justify-content: center;
-    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.searchSortFilterBar {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding-top: 1%;
+    padding-bottom: 1%;
+    padding-left: 1%;
+    padding-right: 1%;
+    border-radius: 15px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.searchSortFilterBar ul li {
+    list-style-type: none;
+    display: inline-block;
+    padding: 10px 20px;
+    color: #f1f1f1;
+    font-weight: bold;
+}
+
+.button {
+    position: relative;
+    border-radius: 12px 12px 12px 12px;
+    width: 150px;
+    height: 30px;
+    border: none;
+    outline: none;
+    background: #029ca6;
+    color: #f1f1f1;
+    cursor: pointer;
+}
+
+.button:hover {
+    background: #2e6189;
+    transition: .5s;
 }

@@ -72,18 +72,16 @@ const Home = () => {
 
     return (
         <div className={style.container}>
-            <Search />
-            <br />
-            <APIDBFilter formAPIDB={formAPIDB} APIDBHandler={APIDBHandler} />
-            <br />
-            <TemperamentsFilter form={form} allTemperaments={allTemperaments} temperamentsHandler={temperamentsHandler} />
-            <br />
-            <SortAZ dogs={dogs} />
-            <br />
-            <SortWeight dogs={dogs} />
-            <br />
-            <button type="submit" onClick={clearHandler}>Delete filters</button>
-            <br />
+            <div className={style.searchSortFilterBar}>
+                <ul>
+                    <li><Search /></li>
+                    <li><SortAZ dogs={dogs} /></li>
+                    <li><SortWeight dogs={dogs} /></li>
+                    <li><APIDBFilter formAPIDB={formAPIDB} APIDBHandler={APIDBHandler} /></li>
+                    <li><TemperamentsFilter form={form} allTemperaments={allTemperaments} temperamentsHandler={temperamentsHandler} /></li>
+                    <li><button type="submit" onClick={clearHandler} className={style.button}>Delete filters</button></li>
+                </ul>
+            </div>
             <Pagination prevHandler={prevHandler} nextHandler={nextHandler} />
             <br />
             <CardsContainer dogs={items} />

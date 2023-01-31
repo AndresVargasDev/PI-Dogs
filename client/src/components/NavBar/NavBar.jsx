@@ -5,7 +5,7 @@ import style from "./NavBar.module.css"
 const NavBar = () => {
     return (
         <div className={style.container}>
-            <img src="./favicon.png" alt="img" />
+            <img src="favicon.png" alt="img" />
             <ul>
                 <Link to="/home">
                     <li>Home</li>

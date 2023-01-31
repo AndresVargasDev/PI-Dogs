@@ -1,5 +1,7 @@
+import React from "react";
 import { sortFilterAZ } from "../../redux/actions";
 import { useDispatch } from "react-redux";
+import style from "./SortAZ.module.css"
 
 const SortAZ = ({ dogs }) => {
     const dispatch = useDispatch();
@@ -10,7 +12,8 @@ const SortAZ = ({ dogs }) => {
     }
 
     return (
-        <div>
+        <div className={style.container}>
+            <h1> Sort by name</h1>
             <select onChange={sortHandlerAZ}>
                 <option disabled defaultValue selected>Select order</option>
                 <option name="ASC">ASC</option>

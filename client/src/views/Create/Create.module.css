@@ -24,6 +24,18 @@
 }
 
 .form button{
+    position: relative;
+    border-radius: 12px 12px 12px 12px;
+    width: 150px;
+    height: 30px;
+    border: none;
+    outline: none;
+    background: #029ca6;
+    color: #f1f1f1;
+    cursor: pointer;
+}
+
+.form button:hover{
     background: #2e6189;
-    color:#f1f1f1;
+    transition: .5s;
 }
