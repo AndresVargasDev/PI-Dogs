@@ -1,10 +1,10 @@
-.search h1 {
+.container h1 {
     margin: 0 0 10px;
     padding: 0;
     font-size: 20px;
 }
 
-.search input {
+.container input {
     position: relative;
     display: inline-block;
     font-size: 13px;
@@ -19,7 +19,7 @@
     border-radius: 12px 0 0 12px;
 }
 
-.search button{
+.container button{
     position: relative;
     border-radius: 0 12px 12px 0;
     width: 60px;
@@ -31,7 +31,7 @@
     cursor: pointer;
 }
 
-.search button:hover{
+.container button:hover{
     background: #2e6189;
     transition: .5s;
 }

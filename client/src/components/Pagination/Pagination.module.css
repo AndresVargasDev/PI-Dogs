@@ -36,3 +36,20 @@
     background: #2e6189;
     transition: .5s;
 }
+
+.pageButton {
+    position: relative;
+    border-radius: 12px 12px 12px 12px;
+    width: 60px;
+    height: 20px;
+    border: none;
+    outline: none;
+    background: #029ca6;
+    color: #f1f1f1;
+    cursor: pointer;
+}
+
+.pageButton:hover {
+    background: #2e6189;
+    transition: .5s;
+}

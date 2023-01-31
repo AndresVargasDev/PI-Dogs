@@ -14,6 +14,7 @@ const Home = () => {
     const [currentPage, setCurrentPage] = useState(0);
     const [form, setForm] = useState({ temperaments: [] });
     const [formAPIDB, setformAPIDB] = useState({ filterApiDB: [] });
+    // const totalPages = dogs.length/dogsPerPage
 
     if (dogs.length > 0 && items.length === 0) setItems([...dogs].splice(0, dogsPerPage));
 

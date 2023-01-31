@@ -22,12 +22,10 @@ const Search = () => {
     }
 
     return (
-        <div className={style.search}>
+        <div className={style.container}>
             <h1> Search </h1>
-            <form>
-                <input id="search" type="search" placeholder="Search for a breed..." onChange={searchHandler} value={search.name} />
-                <button type="submit" onClick={submitHandler} value={search.name}>Search</button>
-            </form>
+            <input id="search" type="search" placeholder="Ingrese el nombre a buscar..." onChange={searchHandler} value={search.name} />
+            <button type="submit" onClick={submitHandler} value={search.name}>Buscar</button>
         </div>
     )
 }
