@@ -6,12 +6,14 @@ import axios from 'axios';
 
 const Create = () => {
     const dispatch = useDispatch();
+    const allTemperaments = useSelector(state => state.temperaments);
+    const [errors, setErrors] = useState({})
+    const regexURL = /^(https?|chrome):\/\/[^\s$.?#].[^\s]*$/;
+    const regexName = /^[A-Za-zÑñÁáÉéÍíÓóÚú\s]+$/;
 
     useEffect(() => {
         dispatch(getAllTemperaments());
     }, [dispatch]);
-
-    const allTemperaments = useSelector(state => state.temperaments);
 
     const [form, setForm] = useState({
         name: "",
@@ -25,31 +27,34 @@ const Create = () => {
         temperaments: []
     });
 
-    const [errors, setErrors] = useState({})
-
     const changeHandler = (event) => {
-        const property = event.target.name;
-        const value = event.target.value;
-        setForm({ ...form, [property]: value })
-        validate({ ...form, [property]: value })
+        const { name, value } = event.target;
+        setForm({ ...form, [name]: value })
     }
 
     const submitHandler = (event) => {
         event.preventDefault();
-        axios.post("http://localhost:3001/dogs", form)
-            .then(res => alert(res))
-            .catch(error => alert(error));
-        setForm({
-            name: "",
-            image: "",
-            minHeight: 0,
-            maxHeight: 0,
-            minWeight: 0,
-            maxWeight: 0,
-            minLifeSpan: 0,
-            maxLifeSpan: 0,
-            temperaments: []
-        })
+        const err = onValidate(form);
+        if (err === null) {
+            axios.post("http://localhost:3001/dogs", form)
+                .then(res => alert(res))
+                .catch(error => alert(error));
+            setForm({
+                name: "",
+                image: "",
+                minHeight: 0,
+                maxHeight: 0,
+                minWeight: 0,
+                maxWeight: 0,
+                minLifeSpan: 0,
+                maxLifeSpan: 0,
+                temperaments: []
+            })
+            setErrors({})
+        }
+        else {
+            setErrors(err);
+        }
     }
 
     function selectHandler(event) {
@@ -64,55 +69,123 @@ const Create = () => {
         });
     }
 
-
-    const validate = (form) => {
-        if (form.name.length < 3) { setErrors({ ...errors, name: "The name cannot be less than 3 letters" }) }
-        // else if (form.minHeight <= 0) { setErrors({ ...errors, minHeight: "La altura minima no puede ser igual a 0 o negativa" }) }
-        // if (form.maxHeight <= 0) { setErrors({ ...errors, maxHeight: "La altura maxima no puede ser igual a 0 o negativa" }) }
-        // if (form.minWeight <= 0) { setErrors({ ...errors, minWeight: "El peso minimo vacio no puede ser igual a 0 negativo" }) }
-        // if (form.maxWeight <= 0) { setErrors({ ...errors, maxWeight: "El peso maximo vacio no puede ser igual a 0 negativo" }) }
-        // if (form.life_span === "") { setErrors({ ...errors, life_span: "El campo de años de vida estimados no puede vacio" }) }
-        // if (form.temperaments.length === 0) { setErrors({ ...errors, temperaments: "Debe asignar aunque sea un temperamento" }) }
-        else {
-            setErrors({})
+    const onValidate = (form) => {
+        let isError = false;
+        let error = {};
+        if (form.name.length <= 3) {
+            error.name = "The name cannot be less than 3 letters";
+            isError = true;
+        } else if (!regexName.test(form.name)) {
+            error.name = "The name can only contain letters and spaces";
+            isError = true;
         }
+        if (!regexURL.test(form.image)) {
+            error.image = "The URL entered is not correct";
+            isError = true;
+        }
+        if (form.minHeight <= 0 || form.minHeight >= form.maxHeight) {
+            error.minHeight = "The minimum height cannot be less than 0 or greater than the maximum height";
+            isError = true;
+        } else if (form.minHeight > 100) {
+            error.minHeight = "The height cannot exceed 100 centimeters";
+            isError = true;
+        }
+        if (form.maxHeight <= 0 || form.minHeight >= form.maxHeight) {
+            error.maxHeight = "The maximum height cannot be less than 0 or less than the minimum height";
+            isError = true;
+        } else if (form.maxHeight > 100) {
+            error.minHeight = "The height cannot exceed 100 centimeters";
+            isError = true;
+        }
+        if (form.minWeight <= 0 || form.minWeight >= form.maxWeight) {
+            error.minWeight = "The minimum weight cannot be less than 0 or greater than the maximum weight";
+            isError = true;
+        } else if (form.minWeight > 100) {
+            error.minHeight = "The weight cannot exceed 100 kilograms";
+            isError = true;
+        }
+        if (form.maxWeight <= 0 || form.minWeight >= form.maxWeight) {
+            error.maxWeight = "The maximum weight cannot be less than 0 or less than the minimum weight";
+            isError = true;
+        } else if (form.minWeight > 100) {
+            error.minHeight = "The weight cannot exceed 100 kilograms";
+            isError = true;
+        }
+        if (form.minLifeSpan <= 0 || form.minLifeSpan >= form.maxLifeSpan) {
+            error.minLifeSpan = "The minimum life span cannot be less than 0 or greater than the maximum life span";
+            isError = true;
+        } else if (form.minLifeSpan > 20) {
+            error.minLifeSpan = "The life span cannot exceed 20 years";
+            isError = true;
+        }
+        if (form.maxLifeSpan <= 0 || form.minLifeSpan >= form.maxLifeSpan) {
+            error.maxLifeSpan = "The maximum life span cannot be less than 0 or less than the minimum life span";
+            isError = true;
+        } else if (form.maxLifeSpan > 20) {
+            error.minLifeSpan = "The life span cannot exceed 20 years";
+            isError = true;
+        }
+        if (form.temperaments.length <= 0) {
+            error.temperaments = "You must assign at least one temperament"
+            isError = true;
+        }
+        return isError ? error : null;
     }
 
     return (
         <form onSubmit={submitHandler} className={style.form}>
-            <h2> CREATE DOG! </h2>
+            <div className={style.title}>
+                <h2> CREATE DOG! </h2>
+            </div>
             <label>Name: </label>
             <input type="text" value={form.name} name="name" onChange={changeHandler} />
-            {errors.name && <span>{errors.name}</span>}
-
-            <label>Image: </label>
+            <span className={style.error}>
+                {errors.name && <><img className={style.img} src="error-icon.png" alt="error"></img><span className={style.span}>{errors.name}</span></>}
+            </span>
+            <br />
+            <label>Image URL: </label>
             <input type="url" value={form.image} name="image" onChange={changeHandler} />
-
+            <span className={style.error}>
+                {errors.image && <><img className={style.img} src="error-icon.png" alt="error img"></img><span className={style.span}>{errors.image}</span></>}
+            </span>
+            <br />
             <label>Min. Height: </label>
             <input type="number" value={form.minHeight} name="minHeight" onChange={changeHandler} />
-            {errors.minHeight && <span>{errors.minHeight}</span>}
-
+            <span className={style.error}>
+                {errors.minHeight && <><img className={style.img} src="error-icon.png" alt="error img"></img><span className={style.span}>{errors.minHeight}</span></>}
+            </span>
+            <br />
             <label>Max. Height: </label>
             <input type="number" value={form.maxHeight} name="maxHeight" onChange={changeHandler} />
-            {errors.maxHeight && <span>{errors.maxHeight}</span>}
-
+            <span className={style.error}>
+                {errors.maxHeight && <><img className={style.img} src="error-icon.png" alt="error img"></img><span className={style.span}>{errors.maxHeight}</span></>}
+            </span>
+            <br />
             <label>Min Weight: </label>
             <input type="number" value={form.minWeight} name="minWeight" onChange={changeHandler} />
-            {errors.minWeight && <span>{errors.minWeight}</span>}
-
+            <span className={style.error}>
+                {errors.minWeight && <><img className={style.img} src="error-icon.png" alt="error img"></img><span className={style.span}>{errors.minWeight}</span></>}
+            </span>
+            <br />
             <label>Max Weight: </label>
             <input type="number" value={form.maxWeight} name="maxWeight" onChange={changeHandler} />
-            {errors.maxWeight && <span>{errors.maxWeight}</span>}
-
+            <span className={style.error}>
+                {errors.maxWeight && <><img className={style.img} src="error-icon.png" alt="error img"></img><span className={style.span}>{errors.maxWeight}</span></>}
+            </span>
+            <br />
             <label>Min Life Span: </label>
             <input type="number" value={form.minLifeSpan} name="minLifeSpan" onChange={changeHandler} />
-            {errors.minLifeSpan && <span>{errors.minLifeSpan}</span>}
-
+            <span className={style.error}>
+                {errors.minLifeSpan && <><img className={style.img} src="error-icon.png" alt="error img"></img><span className={style.span}>{errors.minLifeSpan}</span></>}
+            </span>
+            <br />
             <label>Max Life Span: </label>
             <input type="number" value={form.maxLifeSpan} name="maxLifeSpan" onChange={changeHandler} />
-            {errors.maxLifeSpan && <span>{errors.maxLifeSpan}</span>}
-
-            <label>Temperaments</label>
+            <span className={style.error}>
+                {errors.maxLifeSpan && <><img className={style.img} src="error-icon.png" alt="error img"></img><span className={style.span}>{errors.maxLifeSpan}</span></>}
+            </span>
+            <br />
+            <label>Temperaments: </label>
             <select onChange={selectHandler}>
                 <option disabled defaultValue selected> Select one or more temperaments</option>
                 {allTemperaments.map((temp) => {
@@ -123,14 +196,18 @@ const Create = () => {
                     );
                 })}
             </select>
+            <span className={style.error}>
+                {errors.temperaments && <><img className={style.img} src="error-icon.png" alt="error img"></img><span className={style.span}>{errors.temperaments}</span></>}
+            </span>
+            <br />
             <h4>Selected temperaments: </h4>
             <div>
                 {form.temperaments.map((el) => (
-                    <><span key={el}>{el}</span><button onClick={() => deleteHandler(el)}>x</button></>
+                    <><span key={el}>{el} </span><button onClick={() => deleteHandler(el)} className={style.xButton}>x</button></>
                 ))}
             </div>
             <br />
-            <button type="submit">Create Dog!</button>
+            <button type="submit" className={style.submitButton}>Create Dog!</button>
         </form>
     )
 }

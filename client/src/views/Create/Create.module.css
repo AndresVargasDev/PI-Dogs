@@ -1,29 +1,64 @@
 .form {
-    width: 450px;
+    width: 500px;
     margin: auto;
     background: #f1f1f1;
     padding: 10px 20px;
     box-sizing: border-box;
     margin-top: 20px;
     border-radius: 10px;
-    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
-.form h2{
-    font-size: 30px;
+.title {
+    font-size: 20px;
 }
 
-.form input {
-    width: 100%;
-    padding: 2px;
-    box-sizing: border-box;
+.form select {
+    width: 50%;
 }
 
-.form select{
-    width: 100%;
+.img {
+    height: 15px;
 }
 
-.form button{
+.error {
+    position: relative;
+    cursor: pointer;
+    padding: 7px;
+}
+
+.span {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    transform: translateX(-50%);
+    background-color: #000;
+    color: #fff;
+    white-space: nowrap;
+    padding: 10px 15px;
+    border-radius: 7px;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.span::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 100%;
+    transform: translateX(-50%);
+    border: 15px solid;
+    border-color: #000 #0000 #0000 #0000;
+}
+
+.error:hover .span {
+    top: -150%;
+    visibility: visible;
+    opacity: 1;
+}
+
+.submitButton {
     position: relative;
     border-radius: 12px 12px 12px 12px;
     width: 150px;
@@ -35,7 +70,24 @@
     cursor: pointer;
 }
 
-.form button:hover{
+.submitButton:hover {
+    background: #2e6189;
+    transition: .5s;
+}
+
+.xButton {
+    position: relative;
+    border-radius: 2px 2px 2px 2px;
+    width: 20px;
+    height: 20px;
+    border: none;
+    outline: none;
+    background: #029ca6;
+    color: #f1f1f1;
+    cursor: pointer;
+}
+
+.xButton:hover {
     background: #2e6189;
     transition: .5s;
 }
