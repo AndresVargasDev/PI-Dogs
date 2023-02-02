@@ -41,7 +41,8 @@ export const getDogsByName = (name) => async (dispatch) => {
         const dogsName = await axios.get(`http://localhost:3001/dogs?name=${name}`);
         return dispatch({ type: GET_DOGS_BY_NAME, payload: dogsName.data })
     } catch (error) {
-        throw new Error(error);
+        const dogsNameNoSearch = []
+        return dispatch({ type: GET_DOGS_BY_NAME, payload: dogsNameNoSearch })
     }
 }
 
@@ -82,7 +83,7 @@ export const apiDbFilter = (dogs, value) => {
     try {
         let dogFilter = []
         dogs.map(dog => {
-            if(dog.from === value)dogFilter.push(dog);
+            if (dog.from === value) dogFilter.push(dog);
         });
         return function (dispatch) {
             dispatch({ type: API_DB_FILTER, payload: dogFilter });
