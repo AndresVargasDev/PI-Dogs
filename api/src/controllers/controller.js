@@ -110,8 +110,10 @@ const getTemperaments = async () => {
 const postDog = async (name, image, minHeight, maxHeight, minWeight, maxWeight, minLifeSpan, maxLifeSpan) => {
     try {
         const dogsApiDB = await getAllDogs();
+        const nameTrim = name.trim();
         const dogName = dogsApiDB.find(dog => dog.name === name);
-        if (dogName) {
+        const dogNameTrim = dogsApiDB.find(dog => dog.name === nameTrim);
+        if (dogName || dogNameTrim) {
             throw new Error(`Dog ${name} already exists in the API or in the Database`);
         }
         else if (!name || !minHeight || !maxHeight || !minWeight || !maxWeight || !minLifeSpan || !maxLifeSpan) {

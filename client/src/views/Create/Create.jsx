@@ -4,16 +4,22 @@ import { getAllTemperaments } from '../../redux/actions';
 import style from './Create.module.css';
 import axios from 'axios';
 
+
 const Create = () => {
     const dispatch = useDispatch();
     const allTemperaments = useSelector(state => state.temperaments);
     const [errors, setErrors] = useState({})
+    const [modal, setModal] = useState(false);
     const regexURL = /^(https?|chrome):\/\/[^\s$.?#].[^\s]*$/;
     const regexName = /^[A-Za-zÑñÁáÉéÍíÓóÚú\s]+$/;
+    const [apiResponse, setApiResponse] = useState("");
+    const [isApiError, setIsApiError] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         dispatch(getAllTemperaments());
     }, [dispatch]);
+
 
     const [form, setForm] = useState({
         name: "",
@@ -27,6 +33,16 @@ const Create = () => {
         temperaments: []
     });
 
+    const toggleModal = () => {
+        setModal(!modal);
+    };
+
+    if (modal) {
+        document.body.classList.add('active-modal')
+    } else {
+        document.body.classList.remove('active-modal')
+    }
+
     const changeHandler = (event) => {
         const { name, value } = event.target;
         setForm({ ...form, [name]: value })
@@ -36,9 +52,10 @@ const Create = () => {
         event.preventDefault();
         const err = onValidate(form);
         if (err === null) {
+            setLoading(true);
             axios.post("http://localhost:3001/dogs", form)
-                .then(res => alert(res))
-                .catch(error => alert(error));
+                .then(res => { setApiResponse(res.data.message); setLoading(false) })
+                .catch((error) => { setIsApiError(true); setApiResponse(error.response.data.error); setLoading(false) });
             setForm({
                 name: "",
                 image: "",
@@ -50,6 +67,8 @@ const Create = () => {
                 maxLifeSpan: 0,
                 temperaments: []
             })
+            setModal(!modal);
+            setApiResponse("");
             setErrors({})
         }
         else {
@@ -134,8 +153,28 @@ const Create = () => {
 
     return (
         <form onSubmit={submitHandler} className={style.form}>
+            {(modal) && (
+                <div className={style.modal}>
+                    <div onClick={toggleModal} className={style.overlay}></div>
+                    <div className={style.modalContent}>
+                        {!loading ? (
+                            <>
+                                {isApiError ?
+                                    <><img className={style.imgNotCreate} src="notCreate-icon.png" alt="create img"></img><h2>There is an error with the information.</h2></>
+                                    :
+                                    <><img className={style.imgCreate} src="create-icon.png" alt="create img"></img><h2>You have created a breed of dog!</h2></>}
+                                <p>{apiResponse}</p>
+                            </>
+                        ) : (
+                            <h2>Loading...</h2>
+                        )}
+                        < button className={style.closeModal} onClick={toggleModal}>X</button>
+                    </div>
+                </div>
+            )
+            }
             <div className={style.title}>
-                <h2> CREATE DOG! </h2>
+                <h2> CREATE A DOG! </h2>
             </div>
             <label>Name: </label>
             <input type="text" value={form.name} name="name" onChange={changeHandler} />
@@ -207,8 +246,8 @@ const Create = () => {
                 ))}
             </div>
             <br />
-            <button type="submit" className={style.submitButton}>Create Dog!</button>
-        </form>
+            <button type="submit" className={style.submitButton}>Create!</button>
+        </form >
     )
 }
 

@@ -42,12 +42,12 @@ body {
     height: 30px;
     border: none;
     outline: none;
-    background: #029ca6;
+    background: #2e6189;
     color: #f1f1f1;
     cursor: pointer;
 }
 
 .container button:hover {
-    background: #2e6189;
+    background: #0d2c44;
     transition: .5s;
 }
