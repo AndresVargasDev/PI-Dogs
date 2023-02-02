@@ -8,9 +8,11 @@ const Card = (props) => {
             <h2 className={style.name}>{props.name}</h2>
             <p className={style.temperaments}>{props.temperaments}</p>
             <p className={style.weightProps}>{props.minWeight} - {props.maxWeight} kg</p>
-            <Link to={`/home/${props.id}`}>
-                <p className={style.enlace}>Details</p>
-            </Link>
+            {props.id === "no-info" ? (
+                <><p>No details</p></>) :
+                <Link to={`/home/${props.id}`}>
+                    <p className={style.enlace}>Details</p>
+                </Link>}
         </div>
     )
 }

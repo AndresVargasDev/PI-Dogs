@@ -10,11 +10,11 @@ const Create = () => {
     const allTemperaments = useSelector(state => state.temperaments);
     const [errors, setErrors] = useState({})
     const [modal, setModal] = useState(false);
-    const regexURL = /^(https?|chrome):\/\/[^\s$.?#].[^\s]*$/;
-    const regexName = /^[A-Za-zÑñÁáÉéÍíÓóÚú\s]+$/;
     const [apiResponse, setApiResponse] = useState("");
     const [isApiError, setIsApiError] = useState(false);
     const [loading, setLoading] = useState(false);
+    const regexURL = /^(https?|chrome):\/\/[^\s$.?#].[^\s]*$/;
+    const regexName = /^[A-Za-zÑñÁáÉéÍíÓóÚú\s]+$/;
 
     useEffect(() => {
         dispatch(getAllTemperaments());
@@ -54,22 +54,32 @@ const Create = () => {
         if (err === null) {
             setLoading(true);
             axios.post("http://localhost:3001/dogs", form)
-                .then(res => { setApiResponse(res.data.message); setLoading(false) })
-                .catch((error) => { setIsApiError(true); setApiResponse(error.response.data.error); setLoading(false) });
-            setForm({
-                name: "",
-                image: "",
-                minHeight: 0,
-                maxHeight: 0,
-                minWeight: 0,
-                maxWeight: 0,
-                minLifeSpan: 0,
-                maxLifeSpan: 0,
-                temperaments: []
-            })
-            setModal(!modal);
-            setApiResponse("");
-            setErrors({})
+                .then(res => {
+                    setApiResponse(res.data.message);
+                    setLoading(false);
+                    setModal(!modal);
+                    setApiResponse("");
+                    setErrors({});
+                    setForm({
+                        name: "",
+                        image: "",
+                        minHeight: 0,
+                        maxHeight: 0,
+                        minWeight: 0,
+                        maxWeight: 0,
+                        minLifeSpan: 0,
+                        maxLifeSpan: 0,
+                        temperaments: []
+                    });
+                })
+                .catch((error) => {
+                    setIsApiError(true);
+                    setApiResponse(error.response.data.error);
+                    setLoading(false);
+                    setModal(!modal);
+                    setApiResponse("");
+                    setErrors({});
+                });
         }
         else {
             setErrors(err);
@@ -166,7 +176,9 @@ const Create = () => {
                                 <p>{apiResponse}</p>
                             </>
                         ) : (
-                            <h2>Loading...</h2>
+                            <>
+                                <img className={style.imgNotCreate} src="loading.gif" alt="loading img"></img>
+                            </>
                         )}
                         < button className={style.closeModal} onClick={toggleModal}>X</button>
                     </div>
