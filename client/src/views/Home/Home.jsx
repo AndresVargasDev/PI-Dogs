@@ -9,7 +9,6 @@ const Home = () => {
     const dogs = useSelector(state => state.dogs);
     const allTemperaments = useSelector(state => state.temperaments);
     const filter = useSelector(state => state.filter);
-    const loading = useSelector(state => state.loading);
     const dogsPerPage = 8;
     const [items, setItems] = useState([]);
     const [currentPage, setCurrentPage] = useState(0);
@@ -33,7 +32,7 @@ const Home = () => {
             setItems([...dogs].splice(0, dogsPerPage));
             dispatch(resetFilter());
         }
-    }, [dispatch, filter, dogs, loading]);
+    }, [dispatch, filter, dogs]);
 
     const temperamentsHandler = (event) => {
         const value = event.target.value;
@@ -51,6 +50,12 @@ const Home = () => {
         dispatch(apiDbFilter(dogs, value));
     }
 
+    const firstHandler = (firstPage) => {
+        const firstIndex = firstPage * dogsPerPage;
+        setItems([...dogs].splice(firstIndex, dogsPerPage));
+        setCurrentPage(firstPage);
+    }
+
     const prevHandler = () => {
         const prevPage = currentPage - 1;
         const firstIndex = prevPage * dogsPerPage;
@@ -66,6 +71,18 @@ const Home = () => {
         if (firstIndex > totalDogs) return;
         setItems([...dogs].splice(firstIndex, dogsPerPage));
         setCurrentPage(nextPage);
+    }
+
+    const lastHandler = (lastPage) => {
+        const firstIndex = lastPage * dogsPerPage;
+        setItems([...dogs].splice(firstIndex, dogsPerPage));
+        setCurrentPage(lastPage);
+    }
+
+    const pagination = (numberPage) => {
+        const firstIndex = numberPage * dogsPerPage;
+        setItems([...dogs].splice(firstIndex, dogsPerPage));
+        setCurrentPage(numberPage);
     }
 
     const clearHandler = () => {
@@ -86,11 +103,11 @@ const Home = () => {
                     <li><button type="submit" onClick={clearHandler} className={style.button}>Delete filters</button></li>
                 </ul>
             </div>
-            <Pagination prevHandler={prevHandler} nextHandler={nextHandler} />
+            <Pagination firstHandler={firstHandler} prevHandler={prevHandler}  nextHandler={nextHandler} lastHandler={lastHandler} pagination={pagination} totalDogs={dogs.length} dogsPerPage={dogsPerPage} />
             <br />
             <CardsContainer dogs={items} />
             <br />
-            <Pagination prevHandler={prevHandler} nextHandler={nextHandler} />
+            <Pagination firstHandler={firstHandler} prevHandler={prevHandler}  nextHandler={nextHandler} lastHandler={lastHandler} pagination={pagination} totalDogs={dogs.length} dogsPerPage={dogsPerPage} />
         </div>
     )
 }
