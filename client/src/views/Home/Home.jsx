@@ -1,6 +1,6 @@
 import { React, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { apiDbFilter, getAllDogs, getAllTemperaments, resetFilter, resetDog, temperamentFilter } from "../../redux/actions";
+import { apiDbFilter, getAllDogs, getAllTemperaments, resetFilter, resetDog, resetDogs, resetLoading, temperamentFilter } from "../../redux/actions";
 import { APIDBFilter, CardsContainer, Pagination, TemperamentsFilter, Search, SortAZ, SortWeight } from "../../components/index";
 import style from './Home.module.css';
 
@@ -9,6 +9,7 @@ const Home = () => {
     const dogs = useSelector(state => state.dogs);
     const allTemperaments = useSelector(state => state.temperaments);
     const filter = useSelector(state => state.filter);
+    const loading = useSelector(state => state.loading);
     const dogsPerPage = 8;
     const [items, setItems] = useState([]);
     const [currentPage, setCurrentPage] = useState(0);
@@ -20,7 +21,10 @@ const Home = () => {
     useEffect(() => {
         dispatch(getAllDogs());
         dispatch(getAllTemperaments());
+        dispatch(resetLoading());
         dispatch(resetDog());
+        dispatch(resetDogs());
+        dispatch(resetFilter());
     }, [dispatch]);
 
     useEffect(() => {
@@ -29,7 +33,7 @@ const Home = () => {
             setItems([...dogs].splice(0, dogsPerPage));
             dispatch(resetFilter());
         }
-    }, [dispatch, filter, dogs]);
+    }, [dispatch, filter, dogs, loading]);
 
     const temperamentsHandler = (event) => {
         const value = event.target.value;

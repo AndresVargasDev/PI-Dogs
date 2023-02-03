@@ -9,6 +9,8 @@ export const SORT_FILTER_A_Z = "SORT_FILTER_A_Z";
 export const TEMPERAMENT_FILTER = "TEMPERAMENT_FILTER";
 export const SORT_FILTER_WEIGHT = "SORT_FILTER_WEIGHT";
 export const RESET_DOG = "RESET_DOG";
+export const RESET_LOADING = "RESET_LOADING";
+export const RESET_DOGS = "RESET_DOGS";
 
 
 export const getAllDogs = () => {
@@ -18,11 +20,15 @@ export const getAllDogs = () => {
     }
 };
 
-export const getDogById = (id) => {
-    return async function (dispatch) {
+export const getDogById = (id) => async (dispatch) => {
+    try {
         const dogById = await axios.get(`http://localhost:3001/dogs/${id}`);
-        dispatch({ type: GET_DOG_BY_ID, payload: dogById.data })
+        return dispatch({ type: GET_DOG_BY_ID, payload: dogById.data });
+    } catch (error) {
+        const dogsIdNoSearch = []
+        return dispatch({ type: GET_DOGS_BY_NAME, payload: dogsIdNoSearch })
     }
+
 }
 
 export const getAllTemperaments = () => async (dispatch) => {
@@ -39,7 +45,7 @@ export const getAllTemperaments = () => async (dispatch) => {
 export const getDogsByName = (name) => async (dispatch) => {
     try {
         const dogsName = await axios.get(`http://localhost:3001/dogs?name=${name}`);
-        return dispatch({ type: GET_DOGS_BY_NAME, payload: dogsName.data })
+        return dispatch({ type: GET_DOGS_BY_NAME, payload: dogsName.data });
     } catch (error) {
         const dogsNameNoSearch = []
         return dispatch({ type: GET_DOGS_BY_NAME, payload: dogsNameNoSearch })
@@ -125,4 +131,17 @@ export const resetDog = () => {
         dispatch({ type: RESET_DOG })
     }
 }
+
+export const resetLoading = () => {
+    return function (dispatch) {
+        dispatch({ type: RESET_LOADING })
+    }
+}
+
+export const resetDogs = () => {
+    return function (dispatch) {
+        dispatch({ type: RESET_DOGS })
+    }
+}
+
 
