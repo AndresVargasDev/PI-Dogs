@@ -14,7 +14,7 @@ const CardID = ({ loading }) => {
                     <>
                         <img className={style.img} src="https://stormgain.com/sites/default/files/news/DOGE%20breed.jpg" alt="does not exist" />
                         <div className={style.container}>
-                            <h1 className={style.name}>"The sought breed does not exist"</h1>
+                            <h1 className={style.name}>The sought breed does not exist</h1>
                             <p>From: does not exist </p>
                             <h4 className={style.weight}>Weight</h4>
                             <span> There is no information</span>

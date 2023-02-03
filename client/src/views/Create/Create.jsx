@@ -151,7 +151,7 @@ const Create = () => {
             error.maxLifeSpan = "The maximum life span cannot be less than 0 or less than the minimum life span";
             isError = true;
         } else if (form.maxLifeSpan > 20) {
-            error.minLifeSpan = "The life span cannot exceed 20 years";
+            error.maxLifeSpan = "The life span cannot exceed 20 years";
             isError = true;
         }
         if (form.temperaments.length <= 0) {
