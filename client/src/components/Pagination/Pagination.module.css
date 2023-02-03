@@ -53,3 +53,14 @@
     background: #2e6189;
     transition: .5s;
 }
+
+.pageButtonActive {
+    position: relative;
+    border-radius: 12px 12px 12px 12px;
+    width: 30px;
+    height: 20px;
+    border: none;
+    outline: none;
+    background: #2e6189;
+    color: #f1f1f1;
+}

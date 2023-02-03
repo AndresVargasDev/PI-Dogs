@@ -103,11 +103,11 @@ const Home = () => {
                     <li><button type="submit" onClick={clearHandler} className={style.button}>Delete filters</button></li>
                 </ul>
             </div>
-            <Pagination firstHandler={firstHandler} prevHandler={prevHandler}  nextHandler={nextHandler} lastHandler={lastHandler} pagination={pagination} totalDogs={dogs.length} dogsPerPage={dogsPerPage} />
+            <Pagination firstHandler={firstHandler} prevHandler={prevHandler}  nextHandler={nextHandler} lastHandler={lastHandler} pagination={pagination} totalDogs={dogs.length} dogsPerPage={dogsPerPage} currentPage={currentPage} />
             <br />
             <CardsContainer dogs={items} />
             <br />
-            <Pagination firstHandler={firstHandler} prevHandler={prevHandler}  nextHandler={nextHandler} lastHandler={lastHandler} pagination={pagination} totalDogs={dogs.length} dogsPerPage={dogsPerPage} />
+            <Pagination firstHandler={firstHandler} prevHandler={prevHandler}  nextHandler={nextHandler} lastHandler={lastHandler} pagination={pagination} totalDogs={dogs.length} dogsPerPage={dogsPerPage} currentPage={currentPage} />
         </div>
     )
 }
