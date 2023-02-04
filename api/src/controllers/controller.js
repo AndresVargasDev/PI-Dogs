@@ -162,7 +162,7 @@ const deleteDog = async (id) => {
     }
 }
 
-const putDog = async (id, name, image, minHeight, maxHeight, minWeight, maxWeight, minLifepan, maxLifepan) => {
+const putDog = async (id, name, image, minHeight, maxHeight, minWeight, maxWeight, minLifeSpan, maxLifeSpan) => {
     try {
         const updateDog = await Dog.findByPk(id);
         updateDog.name = name;
@@ -171,8 +171,8 @@ const putDog = async (id, name, image, minHeight, maxHeight, minWeight, maxWeigh
         updateDog.maxHeight = maxHeight;
         updateDog.minWeight = minWeight;
         updateDog.maxWeight = maxWeight;
-        updateDog.minLifepan = minLifepan;
-        updateDog.minLifepan = minLifepan;
+        updateDog.minLifeSpan = minLifeSpan;
+        updateDog.maxLifeSpan = maxLifeSpan;
         await updateDog.save();
         return updateDog;
     } catch (error) {

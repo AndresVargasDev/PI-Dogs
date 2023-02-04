@@ -65,8 +65,23 @@ router.delete('/:id', async (req, res) => {
 router.put('/:id', async (req, res) => {
     try {
         const { id } = req.params;
-        const { name, image, minHeight, maxHeight, minWeight, maxWeight, life_span } = req.body;
-        const updatedog = await putDog(id, name, image, minHeight, maxHeight, minWeight, maxWeight, life_span);
+        const { name, image, minHeight, maxHeight, minWeight, maxWeight, minLifeSpan, maxLifeSpan, temperaments, temperamentsLast } = req.body;
+        if (temperaments.length === 0) {
+            throw new Error("The dog must have at least one temperament");
+        }
+        const updatedog = await putDog(id, name, image, minHeight, maxHeight, minWeight, maxWeight, minLifeSpan, maxLifeSpan);
+        const tempLast = await Temperament.findAll({
+            where: {
+                name: temperamentsLast
+            }
+        })
+        const temp = await Temperament.findAll({
+            where: {
+                name: temperaments
+            }
+        })
+        await updatedog.removeTemperament(tempLast);
+        await updatedog.addTemperament(temp);
         res.status(200).json({ message: `Updated dog ${updatedog.name}` },);
     } catch (error) {
         res.status(400).json({ error: error.message });

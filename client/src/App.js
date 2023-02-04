@@ -1,6 +1,6 @@
 import './App.css';
 import { Route, useLocation } from "react-router-dom";
-import { LandingPage, Home, Create, DetailDog } from './views';
+import { LandingPage, Home, Create, DetailDog, Modify } from './views';
 import NavBar from './components/NavBar/NavBar'
 
 function App() {
@@ -19,6 +19,9 @@ function App() {
       </Route>
       <Route exact path="/home/:id">
         <DetailDog />
+      </Route>
+      <Route exact path="/home/modify/:id">
+        <Modify />
       </Route>
     </div>
   );

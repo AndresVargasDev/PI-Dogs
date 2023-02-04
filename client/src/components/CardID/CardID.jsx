@@ -103,7 +103,9 @@ const CardID = ({ loading }) => {
                                 <span>{dog.temperaments}</span>
                                 {dog.from === "DataBase" ? (
                                     <div>
-                                        <button className={style.buttonModify} name="Modify">Modify</button>
+                                        <Link to={`/home/modify/${dog.id}`}>
+                                            <button className={style.buttonModify} name="Modify">Modify</button>
+                                        </Link>
                                         <button onClick={() => clicHandler()} className={style.buttonDelete} name="Delete">Delete</button>
                                     </div>) : null}
                             </div>
