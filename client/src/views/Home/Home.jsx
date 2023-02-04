@@ -10,8 +10,11 @@ const Home = () => {
     const allTemperaments = useSelector(state => state.temperaments);
     const filter = useSelector(state => state.filter);
     const dogsPerPage = 8;
+    const pageNumberLimit = 5;
     const [items, setItems] = useState([]);
     const [currentPage, setCurrentPage] = useState(0);
+    const [maxPageNumberLimit, setmaxPageNumberLimit] = useState(5);
+    const [minPageNumberLimit, setminPageNumberLimit] = useState(0);
     const [form, setForm] = useState({ temperaments: [] });
     const [formAPIDB, setformAPIDB] = useState({ filterApiDB: [] });
 
@@ -29,6 +32,8 @@ const Home = () => {
     useEffect(() => {
         if (filter === true) {
             setCurrentPage(0);
+            setmaxPageNumberLimit(5);
+            setminPageNumberLimit(0);
             setItems([...dogs].splice(0, dogsPerPage));
             dispatch(resetFilter());
         }
@@ -54,6 +59,8 @@ const Home = () => {
         const firstIndex = firstPage * dogsPerPage;
         setItems([...dogs].splice(firstIndex, dogsPerPage));
         setCurrentPage(firstPage);
+        setmaxPageNumberLimit(5);
+        setminPageNumberLimit(0);
     }
 
     const prevHandler = () => {
@@ -62,6 +69,10 @@ const Home = () => {
         if (prevPage < 0) return;
         setItems([...dogs].splice(firstIndex, dogsPerPage));
         setCurrentPage(prevPage);
+        if ((currentPage) % pageNumberLimit === 0) {
+            setmaxPageNumberLimit(maxPageNumberLimit - pageNumberLimit);
+            setminPageNumberLimit(minPageNumberLimit - pageNumberLimit);
+        }
     }
 
     const nextHandler = () => {
@@ -71,12 +82,18 @@ const Home = () => {
         if (firstIndex > totalDogs) return;
         setItems([...dogs].splice(firstIndex, dogsPerPage));
         setCurrentPage(nextPage);
+        if (currentPage + 2 > maxPageNumberLimit) {
+            setmaxPageNumberLimit(maxPageNumberLimit + pageNumberLimit);
+            setminPageNumberLimit(minPageNumberLimit + pageNumberLimit);
+        }
     }
 
     const lastHandler = (lastPage) => {
         const firstIndex = lastPage * dogsPerPage;
         setItems([...dogs].splice(firstIndex, dogsPerPage));
         setCurrentPage(lastPage);
+        setmaxPageNumberLimit(5 * Math.ceil(lastPage / 5));
+        setminPageNumberLimit(5 * Math.floor(lastPage / 5));
     }
 
     const pagination = (numberPage) => {
@@ -103,11 +120,11 @@ const Home = () => {
                     <li><button type="submit" onClick={clearHandler} className={style.button}>Delete filters</button></li>
                 </ul>
             </div>
-            <Pagination firstHandler={firstHandler} prevHandler={prevHandler}  nextHandler={nextHandler} lastHandler={lastHandler} pagination={pagination} totalDogs={dogs.length} dogsPerPage={dogsPerPage} currentPage={currentPage} />
+            <Pagination firstHandler={firstHandler} prevHandler={prevHandler} nextHandler={nextHandler} lastHandler={lastHandler} pagination={pagination} totalDogs={dogs.length} dogsPerPage={dogsPerPage} currentPage={currentPage} pageNumberLimit={pageNumberLimit} maxPageNumberLimit={maxPageNumberLimit} minPageNumberLimit={minPageNumberLimit} />
             <br />
             <CardsContainer dogs={items} />
             <br />
-            <Pagination firstHandler={firstHandler} prevHandler={prevHandler}  nextHandler={nextHandler} lastHandler={lastHandler} pagination={pagination} totalDogs={dogs.length} dogsPerPage={dogsPerPage} currentPage={currentPage} />
+            <Pagination firstHandler={firstHandler} prevHandler={prevHandler} nextHandler={nextHandler} lastHandler={lastHandler} pagination={pagination} totalDogs={dogs.length} dogsPerPage={dogsPerPage} currentPage={currentPage} pageNumberLimit={pageNumberLimit} maxPageNumberLimit={maxPageNumberLimit} minPageNumberLimit={minPageNumberLimit} />
         </div>
     )
 }
