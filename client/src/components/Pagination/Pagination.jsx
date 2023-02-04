@@ -1,6 +1,5 @@
 import React from "react";
 import style from "./Pagination.module.css";
-import { useState } from "react";
 
 const Pagination = ({ firstHandler, prevHandler, nextHandler, lastHandler, pagination, totalDogs, dogsPerPage, currentPage, pageNumberLimit, maxPageNumberLimit, minPageNumberLimit }) => {
 

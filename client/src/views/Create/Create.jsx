@@ -55,10 +55,10 @@ const Create = () => {
             setLoading(true);
             axios.post("http://localhost:3001/dogs", form)
                 .then(res => {
+                    setIsApiError(false);
                     setApiResponse(res.data.message);
                     setLoading(false);
                     setModal(!modal);
-                    setApiResponse("");
                     setErrors({});
                     setForm({
                         name: "",
@@ -77,7 +77,6 @@ const Create = () => {
                     setApiResponse(error.response.data.error);
                     setLoading(false);
                     setModal(!modal);
-                    setApiResponse("");
                     setErrors({});
                 });
         }
@@ -170,9 +169,11 @@ const Create = () => {
                         {!loading ? (
                             <>
                                 {isApiError ?
-                                    <><img className={style.imgNotCreate} src="notCreate-icon.png" alt="create img"></img><h2>There is an error with the information.</h2></>
+                                    <><img className={style.imgNotCreate} src="notCreate-icon.png" alt="create img"></img>
+                                        <h2>There is an error with the information.</h2></>
                                     :
-                                    <><img className={style.imgCreate} src="create-icon.png" alt="create img"></img><h2>You have created a breed of dog!</h2></>}
+                                    <><img className={style.imgCreate} src="create-icon.png" alt="create img"></img>
+                                        <h2>You have created a breed of dog!</h2></>}
                                 <p>{apiResponse}</p>
                             </>
                         ) : (
