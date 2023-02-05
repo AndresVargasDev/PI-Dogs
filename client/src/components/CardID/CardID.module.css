@@ -21,7 +21,21 @@
     width: 40%;
     height: 100%;
     display: flexbox;
-    padding: 10px 15px;
+}
+
+.container h1 {
+    margin-block-start: 1.5em;
+    margin-block-end: 0.67em;
+}
+
+.container h4 {
+    margin-block-start: 1em;
+    margin-block-end: 0.5em;
+}
+
+.container span {
+    margin-block-start: 0.5em;
+    margin-block-end: 0.5em;
 }
 
 .name {
@@ -91,6 +105,11 @@ body.active-modal {
 .closeModal:hover {
     background: #2e6189;
     transition: .5s;
+}
+
+.modDel {
+    margin-block-start: 1em;
+    margin-block-end: 0.5em;
 }
 
 .buttonCancel {
