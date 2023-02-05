@@ -49,6 +49,7 @@ const Create = () => {
     }
 
     const submitHandler = (event) => {
+        console.log(form)
         event.preventDefault();
         const err = onValidate(form);
         if (err === null) {
@@ -111,43 +112,43 @@ const Create = () => {
             error.image = "The URL entered is not correct";
             isError = true;
         }
-        if (form.minHeight <= 0 || form.minHeight >= form.maxHeight) {
+        if (form.minHeight <= 0 || parseInt(form.minHeight) >= parseInt(form.maxHeight)) {
             error.minHeight = "The minimum height cannot be less than 0 or greater than the maximum height";
             isError = true;
-        } 
+        }
         else if (form.minHeight > 100) {
             error.minHeight = "The height cannot exceed 100 centimeters";
             isError = true;
         }
-        if (form.maxHeight <= 0 || form.minHeight >= form.maxHeight) {
+        if (form.maxHeight <= 0 || parseInt(form.minHeight) >= parseInt(form.maxHeight)) {
             error.maxHeight = "The maximum height cannot be less than 0 or less than the minimum height";
             isError = true;
         } else if (form.maxHeight > 100) {
             error.minHeight = "The height cannot exceed 100 centimeters";
             isError = true;
         }
-        if (form.minWeight <= 0 || form.minWeight >= form.maxWeight) {
+        if (form.minWeight <= 0 || parseInt(form.minWeight) >= parseInt(form.maxWeight)) {
             error.minWeight = "The minimum weight cannot be less than 0 or greater than the maximum weight";
             isError = true;
         } else if (form.minWeight > 100) {
             error.minHeight = "The weight cannot exceed 100 kilograms";
             isError = true;
         }
-        if (form.maxWeight <= 0 || form.minWeight >= form.maxWeight) {
+        if (form.maxWeight <= 0 || parseInt(form.minWeight) >= parseInt(form.maxWeight)) {
             error.maxWeight = "The maximum weight cannot be less than 0 or less than the minimum weight";
             isError = true;
         } else if (form.minWeight > 100) {
             error.minHeight = "The weight cannot exceed 100 kilograms";
             isError = true;
         }
-        if (form.minLifeSpan <= 0 || form.minLifeSpan >= form.maxLifeSpan) {
+        if (form.minLifeSpan <= 0 || parseInt(form.minLifeSpan) >= parseInt(form.maxLifeSpan)) {
             error.minLifeSpan = "The minimum life span cannot be less than 0 or greater than the maximum life span";
             isError = true;
         } else if (form.minLifeSpan > 20) {
             error.minLifeSpan = "The life span cannot exceed 20 years";
             isError = true;
         }
-        if (form.maxLifeSpan <= 0 || form.minLifeSpan >= form.maxLifeSpan) {
+        if (form.maxLifeSpan <= 0 || parseInt(form.minLifeSpan) >= parseInt(form.maxLifeSpan)) {
             error.maxLifeSpan = "The maximum life span cannot be less than 0 or less than the minimum life span";
             isError = true;
         } else if (form.maxLifeSpan > 20) {

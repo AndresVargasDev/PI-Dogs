@@ -39,7 +39,7 @@ router.post('/', async (req, res) => {
         if (temperaments.length === 0) {
             throw new Error("The dog must have at least one temperament");
         }
-        const newDog = await postDog(name, image, minHeight, maxHeight, minWeight, maxWeight, minLifeSpan, maxLifeSpan);
+        const newDog = await postDog(name, image, parseInt(minHeight), parseInt(maxHeight), parseInt(minWeight), parseInt(maxWeight), parseInt(minLifeSpan), parseInt(maxLifeSpan));
         const temp = await Temperament.findAll({
             where: {
                 name: temperaments
@@ -69,7 +69,7 @@ router.put('/:id', async (req, res) => {
         if (temperaments.length === 0) {
             throw new Error("The dog must have at least one temperament");
         }
-        const updatedog = await putDog(id, name, image, minHeight, maxHeight, minWeight, maxWeight, minLifeSpan, maxLifeSpan);
+        const updatedog = await putDog(id, name, image, parseInt(minHeight), parseInt(maxHeight), parseInt(minWeight), parseInt(maxWeight), parseInt(minLifeSpan), parseInt(maxLifeSpan));
         const tempLast = await Temperament.findAll({
             where: {
                 name: temperamentsLast
