@@ -49,7 +49,6 @@ const Create = () => {
     }
 
     const submitHandler = (event) => {
-        console.log(form)
         event.preventDefault();
         const err = onValidate(form);
         if (err === null) {

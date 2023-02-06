@@ -155,7 +155,7 @@ const deleteDog = async (id) => {
                 id,
             }
         })
-        return id;
+        return delDog;
     } catch (error) {
         throw new Error(error);
     }

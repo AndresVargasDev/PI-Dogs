@@ -58,6 +58,7 @@ const CardID = ({ loading }) => {
                         {!isApiError ?
                             <>
                                 <img className={style.imgNotCreate} src="/cry.png" alt="delete"></img>
+                                <h2>Removed dog {dog.name}</h2>
                                 <h2>{apiResponse}</h2>
                             </> :
                             <>

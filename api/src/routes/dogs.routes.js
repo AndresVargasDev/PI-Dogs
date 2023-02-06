@@ -56,7 +56,7 @@ router.delete('/:id', async (req, res) => {
     try {
         const { id } = req.params;
         const delDog = await deleteDog(id);
-        res.status(200).json({ message: `Removed dog from ID ${delDog}` });
+        res.status(200).json({ message: `Removed dog ID ${id}` });
     } catch (error) {
         res.status(400).json({ error: error.message });
     }
