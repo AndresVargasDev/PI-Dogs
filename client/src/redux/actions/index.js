@@ -72,7 +72,7 @@ export const sortFilterAZ = (dogs, value) => {
 export const temperamentFilter = (dogs, value) => {
     try {
         let dogFilter = []
-        dogs.map(dog => {
+        dogs.forEach(dog => {
             const dogTemp = [];
             if (dog.temperaments) dogTemp.push(...dog.temperaments.split(", "));
             if (dogTemp.includes(value)) dogFilter.push(dog);
@@ -88,7 +88,7 @@ export const temperamentFilter = (dogs, value) => {
 export const apiDbFilter = (dogs, value) => {
     try {
         let dogFilter = []
-        dogs.map(dog => {
+        dogs.forEach(dog => {
             if (dog.from === value) dogFilter.push(dog);
         });
         return function (dispatch) {
